@@ -49,7 +49,7 @@ function initPageScripts() {
       $("#tanggal1").datepicker({ dateFormat: "yy-mm-dd", changeMonth: true, changeYear: true });
     }
   } catch(e) {}
-  if (!$.fn.datepicker) { $("#tanggal,#tanggal1").attr("type","date"); }
+  try { if (!$.fn.datepicker) { $("#tanggal,#tanggal1").attr("type","date"); } } catch(e) {}
   // Highslide config
   if (typeof hs !== 'undefined') {
     hs.graphicsDir = 'file/tema/edisi_spesial/js/graphics/';
