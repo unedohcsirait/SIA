@@ -1,17 +1,18 @@
 <?php
 error_reporting(0);
-session_start();
+header('X-Frame-Options: ALLOWALL');
+header('Content-Security-Policy: frame-ancestors *');
+header('Content-Type: text/html; charset=utf-8');
+
 include "konfigurasi/koneksi.php";
-include "file/tema/edisi_spesial/atas.php";
+
+$namasekolah = mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='8'");
+$ns = mysql_fetch_array($namasekolah);
+
 $page = isset($_GET['p']) ? trim($_GET['p']) : '';
+
+include "file/tema/edisi_spesial/hero.php";
 ?>
-<body>
-
-<?php include "file/tema/edisi_spesial/header.php"; ?>
-
-<div id="ajax-wrapper">
-<?php include "file/tema/edisi_spesial/hero.php"; ?>
-
 <main class="de-main">
   <div class="container">
     <div class="row g-4 g-xl-5">
@@ -26,12 +27,4 @@ $page = isset($_GET['p']) ? trim($_GET['p']) : '';
     </div>
   </div>
 </main>
-
 <?php include "file/tema/edisi_spesial/stats.php"; ?>
-</div>
-
-<?php include "file/tema/edisi_spesial/footer.php"; ?>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>

@@ -29,12 +29,12 @@ echo htmlspecialchars($ns['isi_pengaturan']);
 <script src="file/tema/edisi_spesial/js/highslide.js"></script>
 <script src="file/tema/edisi_spesial/js/gen_validatorv4.js"></script>
 <script>
-$(document).ready(function(){
+function initPageScripts() {
   // Tabs
   $(".tab_content").hide();
   $("ul.tabs li:first").addClass("active").show();
   $(".tab_content:first").show();
-  $("ul.tabs li").click(function(){
+  $("ul.tabs li").off("click").on("click", function(){
     $("ul.tabs li").removeClass("active");
     $(this).addClass("active");
     $(".tab_content").hide();
@@ -55,6 +55,72 @@ $(document).ready(function(){
     hs.graphicsDir = 'file/tema/edisi_spesial/js/graphics/';
     hs.outlineType  = 'rounded-white';
   }
+}
+
+$(document).ready(function(){
+  initPageScripts();
 });
+
+// ===== AJAX Navigation =====
+(function(){
+  var wrapper;
+
+  function getAjaxUrl(href) {
+    if (!href || href === '#' || href === '') return null;
+    if (href === 'index.php' || href === './') return 'ajax.php';
+    if (href.startsWith('?')) return 'ajax.php' + href;
+    if (href.startsWith('index.php?')) return 'ajax.php?' + href.slice('index.php?'.length);
+    return null;
+  }
+
+  function loadPage(href, pushState) {
+    var ajaxUrl = getAjaxUrl(href);
+    if (!ajaxUrl) return false;
+
+    wrapper = document.getElementById('ajax-wrapper');
+    if (!wrapper) return false;
+
+    wrapper.style.opacity = '0.5';
+    wrapper.style.transition = 'opacity 0.15s';
+
+    fetch(ajaxUrl, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+      .then(function(r){ return r.text(); })
+      .then(function(html){
+        wrapper.innerHTML = html;
+        wrapper.style.opacity = '1';
+        if (pushState) history.pushState({ href: href }, '', href);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        initPageScripts();
+      })
+      .catch(function(){
+        wrapper.style.opacity = '1';
+        window.location.href = href;
+      });
+
+    return true;
+  }
+
+  document.addEventListener('click', function(e){
+    var link = e.target.closest('a[href]');
+    if (!link) return;
+    var href = link.getAttribute('href');
+    if (!href) return;
+
+    // Skip external, admin, elearning, and other non-page links
+    if (href.startsWith('http') || href.startsWith('//')) return;
+    if (/^(admin|elearningku|kontenweb|instalasi)\//.test(href)) return;
+    if (link.target === '_blank') return;
+    if (href === '#' || href === '') return;
+
+    if (loadPage(href, true)) {
+      e.preventDefault();
+    }
+  });
+
+  window.addEventListener('popstate', function(e){
+    var href = (e.state && e.state.href) ? e.state.href : (location.search || 'index.php');
+    loadPage(href, false);
+  });
+})();
 </script>
 </head>
