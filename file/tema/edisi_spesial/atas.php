@@ -34,7 +34,7 @@ function initPageScripts() {
   $(".tab_content").hide();
   $("ul.tabs li:first").addClass("active").show();
   $(".tab_content:first").show();
-  $("ul.tabs li").off("click").on("click", function(){
+  $("ul.tabs li").unbind("click").bind("click", function(){
     $("ul.tabs li").removeClass("active");
     $(this).addClass("active");
     $(".tab_content").hide();
