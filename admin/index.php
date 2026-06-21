@@ -31,8 +31,8 @@ include "konten/awal.php";
   // --- Query semua statistik ---
   $jmlsiswa    = mysql_num_rows(mysql_query("SELECT id_siswa FROM sh_siswa WHERE status_siswa='1'"));
   $jmlalumni   = mysql_num_rows(mysql_query("SELECT id_siswa FROM sh_siswa WHERE status_siswa='0'"));
-  $jmlguru     = mysql_num_rows(mysql_query("SELECT id_guru_staff FROM sh_guru_staff WHERE posisi='guru'"));
-  $jmlstaff    = mysql_num_rows(mysql_query("SELECT id_guru_staff FROM sh_guru_staff WHERE posisi='staff'"));
+  $jmlguru     = mysql_num_rows(mysql_query("SELECT id_gurustaff FROM sh_guru_staff WHERE posisi='guru'"));
+  $jmlstaff    = mysql_num_rows(mysql_query("SELECT id_gurustaff FROM sh_guru_staff WHERE posisi='staff'"));
   $jmlmapel    = mysql_num_rows(mysql_query("SELECT id_mapel FROM sh_mapel"));
   $jmlkelas    = mysql_num_rows(mysql_query("SELECT id_kelas FROM sh_kelas"));
   $jmlberita   = mysql_num_rows(mysql_query("SELECT id_berita FROM sh_berita"));

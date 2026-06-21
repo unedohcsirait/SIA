@@ -1,179 +1,179 @@
 <?php
 switch($_GET['p']){
 default:
-?>		
-		<?php
-		$cek_slidehome=mysql_query("SELECT * FROM sh_berita WHERE status_terbit='1' AND status_headline='1'");
-		$hasil_slide=mysql_num_rows($cek_slidehome);
-		
-		if($hasil_slide > 0){
-		?>
-		
-		<?php } ?>
-	
-		<div id="konten">
-			<div id="lebar">
-			<?php
-			$sambutan=mysql_query("SELECT * FROM sh_info_sekolah WHERE id_info='1'");
-			$sm=mysql_fetch_array($sambutan);
-			?>
-			<h4><?php echo "$sm[nama_info]";?></h4><br>
-			<p><?php echo "$sm[isi_info]";?></p>
-			</div>
-			
-			
-			      <!-- tabs -->
-		<ul class="tabs">
-			<li><a href="#berita">Berita Terbaru</a></li>
-			<li><a href="#kategori">Kategori Berita</a></li>
-			<li><a href="#komentar">Komentar Terbaru</a></li>
-			<li><a href="#agenda">Agenda Terbaru</a></li>
-		</ul>
+?>              
+                <?php
+                $cek_slidehome=mysql_query("SELECT * FROM sh_berita WHERE status_terbit='1' AND status_headline='1'");
+                $hasil_slide=mysql_num_rows($cek_slidehome);
+                
+                if($hasil_slide > 0){
+                ?>
+                
+                <?php } ?>
+        
+                <div id="konten">
+                        <div id="lebar">
+                        <?php
+                        $sambutan=mysql_query("SELECT * FROM sh_info_sekolah WHERE id_info='1'");
+                        $sm=mysql_fetch_array($sambutan);
+                        ?>
+                        <h4><?php echo "$sm[nama_info]";?></h4><br>
+                        <p><?php echo "$sm[isi_info]";?></p>
+                        </div>
+                        
+                        
+                              <!-- tabs -->
+                <ul class="tabs">
+                        <li><a href="#berita">Berita Terbaru</a></li>
+                        <li><a href="#kategori">Kategori Berita</a></li>
+                        <li><a href="#komentar">Komentar Terbaru</a></li>
+                        <li><a href="#agenda">Agenda Terbaru</a></li>
+                </ul>
 
-		<div id="lebarTab">
-				<div id="berita" class="tab_content">
-					<ul>
-					<?php
-					$berita=mysql_query("SELECT * FROM sh_berita, sh_kategori, sh_users WHERE 
-					sh_berita.id_kategori=sh_kategori.id_kategori AND sh_berita.s_username=sh_users.s_username AND
-					status_terbit='1' ORDER BY id_berita DESC LIMIT 2");
-					$hitungberita=mysql_num_rows($berita);
-					
-					if($hitungberita > 0){
-					while($b=mysql_fetch_array($berita)){
-					?>
-						<li><a href="<?php echo "?p=detberita&id=$b[id_berita]";?>"><?php echo "<b>$b[judul_berita]</b>";?></a>
-						<br><small>Kategori: <a href="?p=katberita&id=<?php echo $b['id_kategori']?>"><?php echo $b['nama_kategori']?></a>
-						&nbsp;Komentar : 
-						<?php
-						$hitungkomentar=mysql_query("SELECT * FROM sh_komentar WHERE id_berita='$b[id_berita]'");
-						$jumlahkomentar=mysql_num_rows($hitungkomentar);
-						echo $jumlahkomentar?></small>
-						<?php
-						$isi_berita = strip_tags($b['isi_berita']); 
-						$isi = substr($isi_berita,0,500);
-						if ($b['gambar_kecil'] != 'no_image.jpg'){
-						echo "<p><img src='images/$b[gambar_kecil]' width='100px' style='float:left; margin: 5px 10px 0 0; padding: 3px; background: #fff; border: 1px solid #dcdcdc'>$isi...<a href='?p=detberita&id=$b[id_berita]'>Baca selengkapnya...</a></p><br>";}
-						else {
-						echo "<p>$isi...<a href='?p=detberita&id=$b[id_berita]'>Baca selengkapnya...</a></p>";
-						}
-						?>
-						</li>
-					<?php }}
+                <div id="lebarTab">
+                                <div id="berita" class="tab_content">
+                                        <ul>
+                                        <?php
+                                        $berita=mysql_query("SELECT * FROM sh_berita, sh_kategori, sh_users WHERE 
+                                        sh_berita.id_kategori=sh_kategori.id_kategori AND sh_berita.s_username=sh_users.s_username AND
+                                        status_terbit='1' ORDER BY id_berita DESC LIMIT 2");
+                                        $hitungberita=mysql_num_rows($berita);
+                                        
+                                        if($hitungberita > 0){
+                                        while($b=mysql_fetch_array($berita)){
+                                        ?>
+                                                <li><a href="<?php echo "?p=detberita&id=$b[id_berita]";?>"><?php echo "<b>$b[judul_berita]</b>";?></a>
+                                                <br><small>Kategori: <a href="?p=katberita&id=<?php echo $b['id_kategori']?>"><?php echo $b['nama_kategori']?></a>
+                                                &nbsp;Komentar : 
+                                                <?php
+                                                $hitungkomentar=mysql_query("SELECT * FROM sh_komentar WHERE id_berita='$b[id_berita]'");
+                                                $jumlahkomentar=mysql_num_rows($hitungkomentar);
+                                                echo $jumlahkomentar?></small>
+                                                <?php
+                                                $isi_berita = strip_tags($b['isi_berita']); 
+                                                $isi = substr($isi_berita,0,500);
+                                                if ($b['gambar_kecil'] != 'no_image.jpg'){
+                                                echo "<p><img src='images/$b[gambar_kecil]' width='100px' style='float:left; margin: 5px 10px 0 0; padding: 3px; background: #fff; border: 1px solid #dcdcdc'>$isi...<a href='?p=detberita&id=$b[id_berita]'>Baca selengkapnya...</a></p><br>";}
+                                                else {
+                                                echo "<p>$isi...<a href='?p=detberita&id=$b[id_berita]'>Baca selengkapnya...</a></p>";
+                                                }
+                                                ?>
+                                                </li>
+                                        <?php }}
 
-					else {?>
-					<li><a href=""><b>Data berita belum ada</b></a></li>
-					<?php } ?>
-					</ul>
-				</div>
-				
-				<div id="kategori" class="tab_content">
-					<ul>
-					<?php
-					$kategori_berita=mysql_query("SELECT * FROM sh_kategori ORDER BY id_kategori ASC");
-					$hitungkategori=mysql_num_rows($kategori_berita);
-					
-					if($hitungkategori > 0){
-					while($k=mysql_fetch_array($kategori_berita)){
-					?>
-						<li><a href="<?php echo "?p=katberita&id=$k[id_kategori]";?>"><?php echo "<b>$k[nama_kategori]</b>";?>
-						<?php
-						$jumlah_berita=mysql_query("SELECT * FROM sh_berita WHERE status_terbit='1' AND id_kategori='$k[id_kategori]'");
-						$jml_ber=mysql_num_rows($jumlah_berita);
-						echo "($jml_ber)";
-						?>
-						</a></li>
-					<?php }}
+                                        else {?>
+                                        <li><a href=""><b>Data berita belum ada</b></a></li>
+                                        <?php } ?>
+                                        </ul>
+                                </div>
+                                
+                                <div id="kategori" class="tab_content">
+                                        <ul>
+                                        <?php
+                                        $kategori_berita=mysql_query("SELECT * FROM sh_kategori ORDER BY id_kategori ASC");
+                                        $hitungkategori=mysql_num_rows($kategori_berita);
+                                        
+                                        if($hitungkategori > 0){
+                                        while($k=mysql_fetch_array($kategori_berita)){
+                                        ?>
+                                                <li><a href="<?php echo "?p=katberita&id=$k[id_kategori]";?>"><?php echo "<b>$k[nama_kategori]</b>";?>
+                                                <?php
+                                                $jumlah_berita=mysql_query("SELECT * FROM sh_berita WHERE status_terbit='1' AND id_kategori='$k[id_kategori]'");
+                                                $jml_ber=mysql_num_rows($jumlah_berita);
+                                                echo "($jml_ber)";
+                                                ?>
+                                                </a></li>
+                                        <?php }}
 
-					else {?>
-					<li><a href=""><b>Data katgeori belum ada</b></a></li>
-					<?php } ?>
-					</ul>
-				</div>
-				
-				<div id="komentar" class="tab_content">
-				    <ul>
-					<?php
-					$komentar=mysql_query("SELECT * FROM sh_komentar, sh_berita WHERE sh_komentar.id_berita=sh_berita.id_berita AND status_terima ='1' AND status_terbit='1' ORDER BY id_komentar DESC limit 4");
-					$hitungkomentar=mysql_num_rows($komentar);
-					
-					if($hitungkomentar > 0){
-					while($kom=mysql_fetch_array($komentar)){
-					?>
-						<li><a href=""><?php echo "$kom[nama_komentar]";?></a> pada <a href="<?php echo "?p=detberita&id=$kom[id_berita]";?>"><?php echo "$kom[judul_berita]";?></a><br>
-						<b><?php echo "$kom[tanggal_komentar]";?></b><br>
-						<i><?php echo "$kom[isi_komentar]";?></i></li>
-					<?php }}
-					
-					else {?>
-					<li><a href=""><b>Data komentar belum ada</b></a></li>
-					<?php } ?>
-					</ul>
-				</div>
-				
-				<div id="agenda" class="tab_content">
-					<ul>
-					<?php
-					$agenda=mysql_query("SELECT * FROM sh_agenda ORDER BY id_agenda DESC limit 4");
-					$hitungagenda=mysql_num_rows($agenda);
-					
-					if($hitungagenda > 0){
-					while($ag=mysql_fetch_array($agenda)){
-					?>
-						<li><b><?php echo "<a href=''>$ag[judul_agenda]</a>";?></b> pada tanggal <b><?php echo "$ag[tanggal_agenda]";?></b><br>
-							<b>Tempat : </b><?php echo "$ag[tempat_agenda]";?><br>
-							<b>Keterangan : </b><?php echo "$ag[keterangan_agenda]";?> </li>
-					<?php }}
-					else {?>
-					<li><b><a href="">Data agenda belum ada</a></b></li>
-					<?php } ?>
-					</ul>
-				</div>
-		</div>
-		<div class="clear"></div>
-		
-			<div id="kecil">
-			<h3>Galeri Terbaru</h3>
-			<?php
-			$poto=mysql_query("SELECT * FROM sh_galeri ORDER BY id_galeri DESC LIMIT 4");
-			$hitungfoto=mysql_num_rows($poto);
-			
-			if($hitungfoto > 0){
-			while($ph=mysql_fetch_array($poto)){
-			?>
-			<p class="thumb"><a id="thumb1" href="images/foto/galeri/<?php echo "$ph[nama_galeri]";?>" class="highslide" onclick="return hs.expand(this)">
-			<img src="images/foto/galeri/<?php echo "$ph[nama_galeri]";?>" alt="Highslide JS" title="Klik untuk memperbesar"/></a>
-			</p>
-			<?php }}
-			else {?>
-			<b>Foto belum ada</b>
-			<?php } ?>
-			</div>
-			
-			<div id="kecil">
-				<div class="pengumuman"><!-- Awal menampilkan pengumuman paling baru-->
-				<?php
-				$pengumuman=mysql_query("SELECT * FROM sh_pengumuman, sh_users WHERE sh_pengumuman.s_username=sh_users.s_username ORDER BY id_pengumuman DESC");
-				$cek_pengumuman=mysql_num_rows($pengumuman);
-				
-				if($cek_pengumuman > 0){
-				$peng=mysql_fetch_array($pengumuman);
-				echo "<h4>$peng[judul_pengumuman]</h4>
-				<p>$peng[isi_pengumuman]</p>
-				<p><b>Diterbitkan pada: $peng[tanggal_pengumuman]</b></p>
-				<p><b>Oleh: $peng[nama_lengkap_users]</b></p>";
-				}
-				else {
-				?>
-				<h4>PENGUMUMAN</h4>
-				<p><b>Belum ada pengumuman</b></p>
-				<?php } ?>
-				</div>
-			</div>
-			
-		<div class="clear"></div>
-		</div>
-<?php break;?>		
+                                        else {?>
+                                        <li><a href=""><b>Data katgeori belum ada</b></a></li>
+                                        <?php } ?>
+                                        </ul>
+                                </div>
+                                
+                                <div id="komentar" class="tab_content">
+                                    <ul>
+                                        <?php
+                                        $komentar=mysql_query("SELECT * FROM sh_komentar, sh_berita WHERE sh_komentar.id_berita=sh_berita.id_berita AND status_terima ='1' AND status_terbit='1' ORDER BY id_komentar DESC limit 4");
+                                        $hitungkomentar=mysql_num_rows($komentar);
+                                        
+                                        if($hitungkomentar > 0){
+                                        while($kom=mysql_fetch_array($komentar)){
+                                        ?>
+                                                <li><a href=""><?php echo "$kom[nama_komentar]";?></a> pada <a href="<?php echo "?p=detberita&id=$kom[id_berita]";?>"><?php echo "$kom[judul_berita]";?></a><br>
+                                                <b><?php echo "$kom[tanggal_komentar]";?></b><br>
+                                                <i><?php echo "$kom[isi_komentar]";?></i></li>
+                                        <?php }}
+                                        
+                                        else {?>
+                                        <li><a href=""><b>Data komentar belum ada</b></a></li>
+                                        <?php } ?>
+                                        </ul>
+                                </div>
+                                
+                                <div id="agenda" class="tab_content">
+                                        <ul>
+                                        <?php
+                                        $agenda=mysql_query("SELECT * FROM sh_agenda ORDER BY id_agenda DESC limit 4");
+                                        $hitungagenda=mysql_num_rows($agenda);
+                                        
+                                        if($hitungagenda > 0){
+                                        while($ag=mysql_fetch_array($agenda)){
+                                        ?>
+                                                <li><b><?php echo "<a href=''>$ag[judul_agenda]</a>";?></b> pada tanggal <b><?php echo "$ag[tanggal_agenda]";?></b><br>
+                                                        <b>Tempat : </b><?php echo "$ag[tempat_agenda]";?><br>
+                                                        <b>Keterangan : </b><?php echo "$ag[keterangan_agenda]";?> </li>
+                                        <?php }}
+                                        else {?>
+                                        <li><b><a href="">Data agenda belum ada</a></b></li>
+                                        <?php } ?>
+                                        </ul>
+                                </div>
+                </div>
+                <div class="clear"></div>
+                
+                        <div id="kecil">
+                        <h3>Galeri Terbaru</h3>
+                        <?php
+                        $poto=mysql_query("SELECT * FROM sh_galeri ORDER BY id_galeri DESC LIMIT 4");
+                        $hitungfoto=mysql_num_rows($poto);
+                        
+                        if($hitungfoto > 0){
+                        while($ph=mysql_fetch_array($poto)){
+                        ?>
+                        <p class="thumb"><a id="thumb1" href="images/foto/galeri/<?php echo "$ph[nama_galeri]";?>" class="highslide" onclick="return hs.expand(this)">
+                        <img src="images/foto/galeri/<?php echo "$ph[nama_galeri]";?>" alt="Highslide JS" title="Klik untuk memperbesar"/></a>
+                        </p>
+                        <?php }}
+                        else {?>
+                        <b>Foto belum ada</b>
+                        <?php } ?>
+                        </div>
+                        
+                        <div id="kecil">
+                                <div class="pengumuman"><!-- Awal menampilkan pengumuman paling baru-->
+                                <?php
+                                $pengumuman=mysql_query("SELECT * FROM sh_pengumuman, sh_users WHERE sh_pengumuman.s_username=sh_users.s_username ORDER BY id_pengumuman DESC");
+                                $cek_pengumuman=mysql_num_rows($pengumuman);
+                                
+                                if($cek_pengumuman > 0){
+                                $peng=mysql_fetch_array($pengumuman);
+                                echo "<h4>$peng[judul_pengumuman]</h4>
+                                <p>$peng[isi_pengumuman]</p>
+                                <p><b>Diterbitkan pada: $peng[tanggal_pengumuman]</b></p>
+                                <p><b>Oleh: $peng[nama_lengkap_users]</b></p>";
+                                }
+                                else {
+                                ?>
+                                <h4>PENGUMUMAN</h4>
+                                <p><b>Belum ada pengumuman</b></p>
+                                <?php } ?>
+                                </div>
+                        </div>
+                        
+                <div class="clear"></div>
+                </div>
+<?php break;?>          
 
 <!--Menampilkan informasi sekolah, yaitu profil sekolah-->
 <?php case "info":
@@ -195,18 +195,18 @@ $r=mysql_fetch_array($info);?>
 <div id="lebar">
 <h3>Berita</h3><br>
 
-<?php	$batas= 5;
-		$halaman=$_GET['halaman'];
-		If (empty($halaman)){
-		$posisi=0;
-		$halaman=1;
-		}
+<?php   $batas= 5;
+                $halaman=$_GET['halaman'];
+                If (empty($halaman)){
+                $posisi=0;
+                $halaman=1;
+                }
 
-		else { $posisi=($halaman-1) * $batas;
-		}
-		$tampil2 = mysql_query ("SELECT * FROM sh_berita WHERE status_terbit='1'");
-		$jmldata = mysql_num_rows($tampil2);
-		$jmlhal = ceil($jmldata/$batas);
+                else { $posisi=($halaman-1) * $batas;
+                }
+                $tampil2 = mysql_query ("SELECT * FROM sh_berita WHERE status_terbit='1'");
+                $jmldata = mysql_num_rows($tampil2);
+                $jmlhal = ceil($jmldata/$batas);
 $berita =mysql_query("SELECT * FROM sh_berita, sh_kategori, sh_users WHERE sh_berita.id_kategori=sh_kategori.id_kategori AND sh_berita.s_username=sh_users.s_username AND status_terbit='1' ORDER BY id_berita DESC LIMIT $posisi, $batas");
 $cek_berita=mysql_num_rows($berita);
 
@@ -219,20 +219,20 @@ $jml_komen=mysql_num_rows($hitung_komen);
 <small>Diposting pada: <a href='?p=tglberita&tgl=$r[tanggal_posting]'>$r[tanggal_posting]</a>, oleh : <a href='?p=userberita&user=$r[s_username]'>$r[nama_lengkap_users]</a>, Kategori: <a href='?p=katberita&id=$r[id_kategori]'>$r[nama_kategori]</a>
 , Komentar : $jml_komen
 </small><br>";
-						$isi_berita = strip_tags($r['isi_berita']); 
-						$isi = substr($isi_berita,0,450);
+                                                $isi_berita = strip_tags($r['isi_berita']); 
+                                                $isi = substr($isi_berita,0,450);
 if ($r['gambar_kecil'] != 'no_image.jpg'){
 echo "<p><img src='images/$r[gambar_kecil]' width='175px' style='float:left; margin: 5px 10px 0 0; padding: 10px; background: #fff; border: 1px solid #dcdcdc'>$isi...<a href='?p=detberita&id=$r[id_berita]'>Baca selengkapnya...</a></p><br>";}
 else {
 echo "<p>$isi...<a href='?p=detberita&id=$r[id_berita]'>Baca selengkapnya...</a></p><br>";
 }}
-		if ($halaman > 1){
-		$prev=$halaman-1;
-		echo 	"	<div class='hal' style='float: left'><a href='?p=berita&halaman=$prev' title='Halaman Sebelumnya'>&laquo; Sebelumnya</a></div>";
-		}
-		if ($halaman < $jmlhal) {
-		$next=$halaman+1;
-		echo "	<div class='hal' style='float: right'><a href='?p=berita&halaman=$next' title='halaman Berikutnya'>Berikutnya &raquo;</a></div>"; }
+                if ($halaman > 1){
+                $prev=$halaman-1;
+                echo    "       <div class='hal' style='float: left'><a href='?p=berita&halaman=$prev' title='Halaman Sebelumnya'>&laquo; Sebelumnya</a></div>";
+                }
+                if ($halaman < $jmlhal) {
+                $next=$halaman+1;
+                echo "  <div class='hal' style='float: right'><a href='?p=berita&halaman=$next' title='halaman Berikutnya'>Berikutnya &raquo;</a></div>"; }
 }
 else { ?>
 <b>Data berita belum tersedia</b>
@@ -263,8 +263,8 @@ $jml_komen=mysql_num_rows($hitung_komen);
 <small>Diposting pada: <a href='?p=tglberita&tgl=$r[tanggal_posting]'>$r[tanggal_posting]</a>, oleh : <a href='?p=userberita&user=$r[s_username]'>$r[nama_lengkap_users]</a>, Kategori: <a href='?p=katberita&id=$r[id_kategori]'>$r[nama_kategori]</a>
 , Komentar : $jml_komen
 </small><br>";
-						$isi_berita = strip_tags($r['isi_berita']); 
-						$isi = substr($isi_berita,0,450);
+                                                $isi_berita = strip_tags($r['isi_berita']); 
+                                                $isi = substr($isi_berita,0,450);
 if ($r['gambar_kecil'] != 'no_image.jpg'){
 echo "<p><img src='images/$r[gambar_kecil]' width='175px' style='float:left; margin: 5px 10px 0 0; padding: 10px; background: #fff; border: 1px solid #dcdcdc'>$isi...<a href='?p=detberita&id=$r[id_berita]'>Baca selengkapnya...</a></p><br>";}
 else {
@@ -305,13 +305,13 @@ $jml_komen=mysql_num_rows($hitung_komen);
 <small>Diposting pada: <a href='?p=tglberita&tgl=$r[tanggal_posting]'>$r[tanggal_posting]</a>, oleh : <a href='?p=userberita&user=$r[s_username]'>$r[nama_lengkap_users]</a>, Kategori: <a href='?p=katberita&id=$r[id_kategori]'>$r[nama_kategori]</a>
 , Komentar : $jml_komen
 </small><br>";
-						$isi_berita = strip_tags($r['isi_berita']); 
-						$isi = substr($isi_berita,0,450);
+                                                $isi_berita = strip_tags($r['isi_berita']); 
+                                                $isi = substr($isi_berita,0,450);
 if ($r['gambar_kecil'] != 'no_image.jpg'){
 echo "<p><img src='images/$r[gambar_kecil]' width='175px' style='float:left; margin: 5px 10px 0 0; padding: 10px; background: #fff; border: 1px solid #dcdcdc'>$isi...<a href='?p=detberita&id=$r[id_berita]'>Baca selengkapnya...</a></p><br>";}
 else {
 echo "<p>$isi...<a href='?p=detberita&id=$r[id_berita]'>Baca selengkapnya...</a></p><br>";
-}}	
+}}      
 }
 else { ?>
 <b>Data berita dalam kategori <?php echo $nk['nama_kategori']?> belum tersedia</b>
@@ -347,13 +347,13 @@ $jml_komen=mysql_num_rows($hitung_komen);
 <small>Diposting pada: <a href='?p=tglberita&tgl=$r[tanggal_posting]'>$r[tanggal_posting]</a>, oleh : <a href='?p=userberita&user=$r[s_username]'>$r[nama_lengkap_users]</a>, Kategori: <a href='?p=katberita&id=$r[id_kategori]'>$r[nama_kategori]</a>
 , Komentar : $jml_komen
 </small><br>";
-						$isi_berita = strip_tags($r['isi_berita']); 
-						$isi = substr($isi_berita,0,450);
+                                                $isi_berita = strip_tags($r['isi_berita']); 
+                                                $isi = substr($isi_berita,0,450);
 if ($r['gambar_kecil'] != 'no_image.jpg'){
 echo "<p><img src='images/$r[gambar_kecil]' width='175px' style='float:left; margin: 5px 10px 0 0; padding: 10px; background: #fff; border: 1px solid #dcdcdc'>$isi...<a href='?p=detberita&id=$r[id_berita]'>Baca selengkapnya...</a></p><br>";}
 else {
 echo "<p>$isi...<a href='?p=detberita&id=$r[id_berita]'>Baca selengkapnya...</a></p><br>";
-}}	
+}}      
 }
 else { ?>
 <b>Data berita yang ditulis oleh <?php echo $nu['nama_lengkap_users']?> belum tersedia</b>
@@ -388,13 +388,13 @@ $jml_komen=mysql_num_rows($hitung_komen);
 <small>Diposting pada: <a href='?p=tglberita&tgl=$r[tanggal_posting]'>$r[tanggal_posting]</a>, oleh : <a href='?p=userberita&user=$r[s_username]'>$r[nama_lengkap_users]</a>, Kategori: <a href='?p=katberita&id=$r[id_kategori]'>$r[nama_kategori]</a>
 , Komentar : $jml_komen
 </small><br>";
-						$isi_berita = strip_tags($r['isi_berita']); 
-						$isi = substr($isi_berita,0,450);
+                                                $isi_berita = strip_tags($r['isi_berita']); 
+                                                $isi = substr($isi_berita,0,450);
 if ($r['gambar_kecil'] != 'no_image.jpg'){
 echo "<p><img src='images/$r[gambar_kecil]' width='175px' style='float:left; margin: 5px 10px 0 0; padding: 10px; background: #fff; border: 1px solid #dcdcdc'>$isi...<a href='?p=detberita&id=$r[id_berita]'>Baca selengkapnya...</a></p><br>";}
 else {
 echo "<p>$isi...<a href='?p=detberita&id=$r[id_berita]'>Baca selengkapnya...</a></p><br>";
-}}	
+}}      
 }
 else { ?>
 <b>Data berita yang ditulis oleh <?php echo $nu['nama_lengkap_users']?> belum tersedia</b>
@@ -423,7 +423,7 @@ $r=mysql_fetch_array($pencarian);
 $beritaterkait=mysql_query("SELECT * FROM sh_berita WHERE id_berita!='$r[id_berita]' AND status_terbit='1' ORDER BY RAND() LIMIT 5");
 while($bt=mysql_fetch_array($beritaterkait)){
 ?>
-	<li style="padding: 5px 0 5px 0;"><a href="<?php echo "?p=detberita&id=$bt[id_berita]";?>"><?php echo "$bt[judul_berita]";?></a></li>
+        <li style="padding: 5px 0 5px 0;"><a href="<?php echo "?p=detberita&id=$bt[id_berita]";?>"><?php echo "$bt[judul_berita]";?></a></li>
 <?php } ?>
 </ul><br><br>
 <?php
@@ -434,14 +434,14 @@ if ($r['status_komentar'] == 1){
 <form method="POST" action="kontenweb/insert_komentar.php" id="formkomentar" name="formkomentar">
 <?php echo "<input type='hidden' name='id' value='$r[id_berita]'>";?>
 <table>
-	<tr><td width="75px"><b>Nama *</b></td><td><input type="text" name="nama" class="sedang"></td></tr>
-	<tr><td><b>Email *</b></td><td><input type="text" name="email" class="sedang">&nbsp;<small><i>Tidak akan diterbitkan</i></small></td></tr>
-	<tr><td><b>Komentar *</b></td><td>
-	<textarea name="komentar" style="width: 200px; height: 75px;"></textarea>
-	</td></tr>
-	<tr><td></td><td><img src="kontenweb/captcha.php?date=<?php echo date('YmdHis');?>" alt="security image" /></td></tr>
-	<tr><td></td><td><input type="text" name="kode" class="pendek">&nbsp;<small><i>Masukkan kode diatas</i></td></tr>
-	<tr><td></td><td><input type="submit" class="tombol" value="Kirim">&nbsp;<input type="reset" class="tombol" value="Reset"></td></tr>
+        <tr><td width="75px"><b>Nama *</b></td><td><input type="text" name="nama" class="sedang"></td></tr>
+        <tr><td><b>Email *</b></td><td><input type="text" name="email" class="sedang">&nbsp;<small><i>Tidak akan diterbitkan</i></small></td></tr>
+        <tr><td><b>Komentar *</b></td><td>
+        <textarea name="komentar" style="width: 200px; height: 75px;"></textarea>
+        </td></tr>
+        <tr><td></td><td><img src="kontenweb/captcha.php?date=<?php echo date('YmdHis');?>" alt="security image" /></td></tr>
+        <tr><td></td><td><input type="text" name="kode" class="pendek">&nbsp;<small><i>Masukkan kode diatas</i></td></tr>
+        <tr><td></td><td><input type="submit" class="tombol" value="Kirim">&nbsp;<input type="reset" class="tombol" value="Reset"></td></tr>
 </table>
 </form>
 <?php include "form_komentar.php";?>
@@ -452,14 +452,14 @@ $jml_komentar_ini=mysql_num_rows($hitung_komentar_ini); ?>
 <br>
 <h3>Ada <?php echo $jml_komentar_ini?> komentar untuk berita ini</h3>
 <ul style="list-style: none; padding-left: 5px;">
-	<?php $komentar=mysql_query("SELECT * FROM sh_komentar WHERE status_terima='1' AND id_berita='$r[id_berita]' ORDER BY id_komentar DESC");
-			while($k=mysql_fetch_array($komentar)){ ?>
-	<li style="padding: 5px 0 5px 0; border-bottom: 1px solid #dcdcdc">
-	<p><b><?php echo "<a href=''>$k[nama_komentar]</a>";?></b><br><small><?php echo "$k[tanggal_komentar]";?></small></p>
-	<p><?php echo "$k[isi_komentar]"?></p>
-	<?php } ?>
-	</li>
-		
+        <?php $komentar=mysql_query("SELECT * FROM sh_komentar WHERE status_terima='1' AND id_berita='$r[id_berita]' ORDER BY id_komentar DESC");
+                        while($k=mysql_fetch_array($komentar)){ ?>
+        <li style="padding: 5px 0 5px 0; border-bottom: 1px solid #dcdcdc">
+        <p><b><?php echo "<a href=''>$k[nama_komentar]</a>";?></b><br><small><?php echo "$k[tanggal_komentar]";?></small></p>
+        <p><?php echo "$k[isi_komentar]"?></p>
+        <?php } ?>
+        </li>
+                
 </ul>
 <?php } ?>
 </div>
@@ -473,18 +473,18 @@ $jml_komentar_ini=mysql_num_rows($hitung_komentar_ini); ?>
 <div id="lebar">
 <h3>Agenda <a href=""><?php echo "$ns[isi_pengaturan]";?></a></h3><br>
 <?php
-	$batas= 5;
-	$halaman=$_GET['halaman'];
-		If (empty($halaman)){
-		$posisi=0;
-		$halaman=1;
-		}
+        $batas= 5;
+        $halaman=$_GET['halaman'];
+                If (empty($halaman)){
+                $posisi=0;
+                $halaman=1;
+                }
 
-		else { $posisi=($halaman-1) * $batas;
-		}
-		$tampil2 = mysql_query ("SELECT * FROM sh_agenda");
-		$jmldata = mysql_num_rows($tampil2);
-		$jmlhal = ceil($jmldata/$batas);
+                else { $posisi=($halaman-1) * $batas;
+                }
+                $tampil2 = mysql_query ("SELECT * FROM sh_agenda");
+                $jmldata = mysql_num_rows($tampil2);
+                $jmlhal = ceil($jmldata/$batas);
 $agenda=mysql_query("SELECT * FROM sh_agenda, sh_users WHERE sh_agenda.s_username=sh_users.s_username ORDER BY id_agenda DESC LIMIT $posisi, $batas");
 $cek_agenda=mysql_num_rows($agenda);
 
@@ -492,20 +492,20 @@ if($cek_agenda > 0){
 while($r=mysql_fetch_array($agenda)){
 ?>
 <table style="margin: 20px 0 10px 0; border-bottom: 1px solid #dcdcdc">
-	<tr><th colspan="3"><a href=""><?php echo "$r[judul_agenda]";?></a></th></tr>
-	<tr><td width="120px"><b>Tanggal Agenda</b></td><td width="3px">:</td><td><?php echo "$r[tanggal_agenda]";?></td></tr>
-	<tr><td width="120px"><b>Tempat Pelaksanaan</b></td><td width="3px">:</td><td><?php echo "$r[tempat_agenda]";?></td></tr>
-	<tr><td width="120px"><b>Keterangan</b></td><td>:</td width="3px"><td><?php echo "$r[keterangan_agenda]";?></td></tr>
-	<tr><td width="120px"><b>Ditulis Oleh</b></td><td>:</td width="3px"><td><?php echo "$r[nama_lengkap_users]";?></td></tr>
+        <tr><th colspan="3"><a href=""><?php echo "$r[judul_agenda]";?></a></th></tr>
+        <tr><td width="120px"><b>Tanggal Agenda</b></td><td width="3px">:</td><td><?php echo "$r[tanggal_agenda]";?></td></tr>
+        <tr><td width="120px"><b>Tempat Pelaksanaan</b></td><td width="3px">:</td><td><?php echo "$r[tempat_agenda]";?></td></tr>
+        <tr><td width="120px"><b>Keterangan</b></td><td>:</td width="3px"><td><?php echo "$r[keterangan_agenda]";?></td></tr>
+        <tr><td width="120px"><b>Ditulis Oleh</b></td><td>:</td width="3px"><td><?php echo "$r[nama_lengkap_users]";?></td></tr>
 </table>
 <?php } 
-		if ($halaman > 1){
-		$prev=$halaman-1;
-		echo 	"	<div class='hal' style='float: left'><a href='?p=agenda&halaman=$prev' title='Halaman Sebelumnya'>&laquo; Sebelumnya</a></div>";
-		}
-		if ($halaman < $jmlhal) {
-		$next=$halaman+1;
-		echo "	<div class='hal' style='float: right'><a href='?p=agenda&halaman=$next' title='halaman Berikutnya'>Berikutnya &raquo;</a></div>"; }
+                if ($halaman > 1){
+                $prev=$halaman-1;
+                echo    "       <div class='hal' style='float: left'><a href='?p=agenda&halaman=$prev' title='Halaman Sebelumnya'>&laquo; Sebelumnya</a></div>";
+                }
+                if ($halaman < $jmlhal) {
+                $next=$halaman+1;
+                echo "  <div class='hal' style='float: right'><a href='?p=agenda&halaman=$next' title='halaman Berikutnya'>Berikutnya &raquo;</a></div>"; }
 }
 else { ?>
 <b>Data Agenda Belum Tersedia</b>
@@ -521,18 +521,18 @@ else { ?>
 <div id="lebar">
 <h3>Pengumuman <a href=""><?php echo "$ns[isi_pengaturan]";?></a></h3><br>
 <?php
-	$batas= 10;
-	$halaman=$_GET['halaman'];
-		If (empty($halaman)){
-		$posisi=0;
-		$halaman=1;
-		}
+        $batas= 10;
+        $halaman=$_GET['halaman'];
+                If (empty($halaman)){
+                $posisi=0;
+                $halaman=1;
+                }
 
-		else { $posisi=($halaman-1) * $batas;
-		}
-		$tampil2 = mysql_query ("SELECT * FROM sh_pengumuman");
-		$jmldata = mysql_num_rows($tampil2);
-		$jmlhal = ceil($jmldata/$batas);
+                else { $posisi=($halaman-1) * $batas;
+                }
+                $tampil2 = mysql_query ("SELECT * FROM sh_pengumuman");
+                $jmldata = mysql_num_rows($tampil2);
+                $jmlhal = ceil($jmldata/$batas);
 $pengumuman=mysql_query("SELECT * FROM sh_pengumuman, sh_users WHERE sh_pengumuman.s_username=sh_users.s_username ORDER BY id_pengumuman DESC LIMIT $posisi, $batas");
 $cek_pengumuman=mysql_num_rows($pengumuman);
 
@@ -540,23 +540,23 @@ if($cek_pengumuman > 0){
 while($r=mysql_fetch_array($pengumuman)){
 ?>
 <table style="margin: 20px 0 10px 0; border-bottom: 1px solid #dcdcdc">
-	<tr><th colspan="3"><a href=""><?php echo "$r[judul_pengumuman]";?></a></th></tr>
-	<tr><td width="120px"><b>Tanggal Posting</b></td><td width="3px">:</td><td><?php echo "$r[tanggal_pengumuman]";?></td></tr>
-	<tr><td width="120px"><b>Diterbitkan oleh</b></td><td>:</td width="3px"><td><?php echo "$r[nama_lengkap_users]";?></td></tr>
-	<tr><td colspan="3"><?php echo "$r[isi_pengumuman]";?></td></tr>
+        <tr><th colspan="3"><a href=""><?php echo "$r[judul_pengumuman]";?></a></th></tr>
+        <tr><td width="120px"><b>Tanggal Posting</b></td><td width="3px">:</td><td><?php echo "$r[tanggal_pengumuman]";?></td></tr>
+        <tr><td width="120px"><b>Diterbitkan oleh</b></td><td>:</td width="3px"><td><?php echo "$r[nama_lengkap_users]";?></td></tr>
+        <tr><td colspan="3"><?php echo "$r[isi_pengumuman]";?></td></tr>
 </table>
 <?php } 
-		if ($halaman > 1){
-		$prev=$halaman-1;
-		echo 	"	<div class='hal' style='float: left'><a href='?p=pengumuman&halaman=$prev' title='Halaman Sebelumnya'>&laquo; Sebelumnya</a></div>";
-		}
-		if ($halaman < $jmlhal) {
-		$next=$halaman+1;
-		echo "	<div class='hal' style='float: right'><a href='?p=pengumuman&halaman=$next' title='halaman Berikutnya'>Berikutnya &raquo;</a></div>"; }
-		}
-		else {?>
-		<b>Data Pengumuman Belum Tersedia</b>
-		<?php } ?>
+                if ($halaman > 1){
+                $prev=$halaman-1;
+                echo    "       <div class='hal' style='float: left'><a href='?p=pengumuman&halaman=$prev' title='Halaman Sebelumnya'>&laquo; Sebelumnya</a></div>";
+                }
+                if ($halaman < $jmlhal) {
+                $next=$halaman+1;
+                echo "  <div class='hal' style='float: right'><a href='?p=pengumuman&halaman=$next' title='halaman Berikutnya'>Berikutnya &raquo;</a></div>"; }
+                }
+                else {?>
+                <b>Data Pengumuman Belum Tersedia</b>
+                <?php } ?>
 </div>
 </div>
 <?php break;?>
@@ -570,9 +570,9 @@ while($r=mysql_fetch_array($pengumuman)){
 
 <form method="POST" action="?p=gurujk" style="float:left">
 <select name="jk" onChange="this.form.submit()">
-	<option selected>Jenis Kelamin</option>
-	<option value="L">Laki laki</option>
-	<option value="P">Perempuan</option>
+        <option selected>Jenis Kelamin</option>
+        <option value="L">Laki laki</option>
+        <option value="P">Perempuan</option>
 </select>
 </form>
 
@@ -591,19 +591,19 @@ if($hitungguru > 0){
 while($r=mysql_fetch_array($gurustaff)){
 ?>
 <tr class="garis"><td class="garis"><?php echo "$no";?></td>
-	<?php
-	$detaildata=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='6'");
-	$dd=mysql_fetch_array($detaildata);
-		if ($dd['isi_pengaturan']== 0){
-	?>
-	<td class="garis"><b><?php echo "$r[nama_gurustaff]";?></b></td>
-	<?php }
-	else { ?>
-	
-	<td class="garis"><a href="<?php echo "?p=detailguru&nip=$r[nip]";?>" title="Klik untuk melihat detail data"><b><?php echo "$r[nama_gurustaff]";?></b></a></td>
-	<?php } ?>
-	<td class="garis"><?php echo "$r[jenkel]";?></td>
-	<td class="garis"><?php echo "$r[nama_mapel]";?></td>
+        <?php
+        $detaildata=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='6'");
+        $dd=mysql_fetch_array($detaildata);
+                if ($dd['isi_pengaturan']== 0){
+        ?>
+        <td class="garis"><b><?php echo "$r[nama_gurustaff]";?></b></td>
+        <?php }
+        else { ?>
+        
+        <td class="garis"><a href="<?php echo "?p=detailguru&nip=$r[nip]";?>" title="Klik untuk melihat detail data"><b><?php echo "$r[nama_gurustaff]";?></b></a></td>
+        <?php } ?>
+        <td class="garis"><?php echo "$r[jenkel]";?></td>
+        <td class="garis"><?php echo "$r[nama_mapel]";?></td>
 </tr>
 <?php $no++; }}
 
@@ -611,10 +611,10 @@ else { ?>
 <tr class="garis"><td colspan="4"><b>Data guru belum ada</b></td></tr>
 <?php } ?>
 </table>
-				<div id="pageNavPosition"></div>
-		
-		
-			    <script type="text/javascript"><!--
+                                <div id="pageNavPosition"></div>
+                
+                
+                            <script type="text/javascript"><!--
         var pager = new Pager('results', 30); 
         pager.init(); 
         pager.showPageNav('pager', 'pageNavPosition'); 
@@ -633,9 +633,9 @@ else { ?>
 
 <form method="POST" action="?p=gurujk" style="float:left">
 <select name="jk" onChange="this.form.submit()">
-	<option selected>Jenis Kelamin</option>
-	<option value="L">Laki laki</option>
-	<option value="P">Perempuan</option>
+        <option selected>Jenis Kelamin</option>
+        <option value="L">Laki laki</option>
+        <option value="P">Perempuan</option>
 </select>
 </form>
 
@@ -654,19 +654,19 @@ if($cek_guru > 0){
 while($r=mysql_fetch_array($gurustaff)){
 ?>
 <tr class="garis"><td class="garis"><?php echo "$no";?></td>
-	<?php
-	$detaildata=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='6'");
-	$dd=mysql_fetch_array($detaildata);
-		if ($dd['isi_pengaturan']== 0){
-	?>
-	<td class="garis"><b><?php echo "$r[nama_gurustaff]";?></b></td>
-	<?php }
-	else { ?>
-	
-	<td class="garis"><a href="<?php echo "?p=detailguru&nip=$r[nip]";?>" title="Klik untuk melihat detail data"><b><?php echo "$r[nama_gurustaff]";?></b></a></td>
-	<?php } ?>
-	<td class="garis"><?php echo "$r[jenkel]";?></td>
-	<td class="garis"><?php echo "$r[nama_mapel]";?></td>
+        <?php
+        $detaildata=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='6'");
+        $dd=mysql_fetch_array($detaildata);
+                if ($dd['isi_pengaturan']== 0){
+        ?>
+        <td class="garis"><b><?php echo "$r[nama_gurustaff]";?></b></td>
+        <?php }
+        else { ?>
+        
+        <td class="garis"><a href="<?php echo "?p=detailguru&nip=$r[nip]";?>" title="Klik untuk melihat detail data"><b><?php echo "$r[nama_gurustaff]";?></b></a></td>
+        <?php } ?>
+        <td class="garis"><?php echo "$r[jenkel]";?></td>
+        <td class="garis"><?php echo "$r[nama_mapel]";?></td>
 </tr>
 <?php $no++; } }
 else {
@@ -679,10 +679,10 @@ else { echo "Perempuan"; }
  belum ada</b></td></tr>
 <?php } ?>
 </table>
-				<div id="pageNavPosition"></div>
-		
-		
-			    <script type="text/javascript"><!--
+                                <div id="pageNavPosition"></div>
+                
+                
+                            <script type="text/javascript"><!--
         var pager = new Pager('results', 30); 
         pager.init(); 
         pager.showPageNav('pager', 'pageNavPosition'); 
@@ -705,9 +705,9 @@ $cari = htmlentities(htmlspecialchars($cari), ENT_QUOTES);
 
 <form method="POST" action="?p=gurujk" style="float:left">
 <select name="jk" onChange="this.form.submit()">
-	<option selected>Jenis Kelamin</option>
-	<option value="L">Laki laki</option>
-	<option value="P">Perempuan</option>
+        <option selected>Jenis Kelamin</option>
+        <option value="L">Laki laki</option>
+        <option value="P">Perempuan</option>
 </select>
 </form>
 
@@ -726,19 +726,19 @@ if ($hitung > 0){
 while($r=mysql_fetch_array($gurustaff)){
 ?>
 <tr class="garis"><td class="garis"><?php echo "$no";?></td>
-	<?php
-	$detaildata=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='6'");
-	$dd=mysql_fetch_array($detaildata);
-		if ($dd['isi_pengaturan']== 0){
-	?>
-	<td class="garis"><b><?php echo "$r[nama_gurustaff]";?></b></td>
-	<?php }
-	else { ?>
-	
-	<td class="garis"><a href="<?php echo "?p=detailguru&nip=$r[nip]";?>" title="Klik untuk melihat detail data"><b><?php echo "$r[nama_gurustaff]";?></b></a></td>
-	<?php } ?>
-	<td class="garis"><?php echo "$r[jenkel]";?></td>
-	<td class="garis"><?php echo "$r[nama_mapel]";?></td>
+        <?php
+        $detaildata=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='6'");
+        $dd=mysql_fetch_array($detaildata);
+                if ($dd['isi_pengaturan']== 0){
+        ?>
+        <td class="garis"><b><?php echo "$r[nama_gurustaff]";?></b></td>
+        <?php }
+        else { ?>
+        
+        <td class="garis"><a href="<?php echo "?p=detailguru&nip=$r[nip]";?>" title="Klik untuk melihat detail data"><b><?php echo "$r[nama_gurustaff]";?></b></a></td>
+        <?php } ?>
+        <td class="garis"><?php echo "$r[jenkel]";?></td>
+        <td class="garis"><?php echo "$r[nama_mapel]";?></td>
 </tr>
 <?php $no++; } }
 else {
@@ -746,10 +746,10 @@ echo "<tr class='garis'><td colspan='4'>Data tidak ditemukan</td></tr>";
 }
 ?>
 </table>
-				<div id="pageNavPosition"></div>
-		
-		
-			    <script type="text/javascript"><!--
+                                <div id="pageNavPosition"></div>
+                
+                
+                            <script type="text/javascript"><!--
         var pager = new Pager('results', 30); 
         pager.init(); 
         pager.showPageNav('pager', 'pageNavPosition'); 
@@ -765,9 +765,9 @@ echo "<tr class='garis'><td colspan='4'>Data tidak ditemukan</td></tr>";
 <div id="konten">
 <div id="lebar">
 <?php
-	$detaildata=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='6'");
-	$dd=mysql_fetch_array($detaildata);
-		if ($dd['isi_pengaturan'] > 0){
+        $detaildata=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='6'");
+        $dd=mysql_fetch_array($detaildata);
+                if ($dd['isi_pengaturan'] > 0){
 $detailguru=mysql_query("SELECT * FROM sh_guru_staff, sh_mapel WHERE sh_guru_staff.id_mapel=sh_mapel.id_mapel AND nip='$_GET[nip]'");
 $r=mysql_fetch_array($detailguru);
 ?>
@@ -796,9 +796,9 @@ $r=mysql_fetch_array($detailguru);
 
 <form method="POST" action="?p=staffjk" style="float:left">
 <select name="jk" onChange="this.form.submit()">
-	<option selected>Jenis Kelamin</option>
-	<option value="L">Laki laki</option>
-	<option value="P">Perempuan</option>
+        <option selected>Jenis Kelamin</option>
+        <option value="L">Laki laki</option>
+        <option value="P">Perempuan</option>
 </select>
 </form>
 
@@ -817,19 +817,19 @@ if($hitungstaff > 0){
 while($r=mysql_fetch_array($gurustaff)){
 ?>
 <tr class="garis"><td class="garis"><?php echo "$no";?></td>
-	<?php
-	$detaildata=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='6'");
-	$dd=mysql_fetch_array($detaildata);
-		if ($dd['isi_pengaturan']== 0){
-	?>
-	<td class="garis"><b><?php echo "$r[nama_gurustaff]";?></b></td>
-	<?php }
-	else { ?>
-	
-	<td class="garis"><a href="<?php echo "?p=detailstaff&nip=$r[nip]";?>" title="Klik untuk melihat detail data"><b><?php echo "$r[nama_gurustaff]";?></b></a></td>
-	<?php } ?>
-	<td class="garis"><?php echo "$r[jenkel]";?></td>
-	<td class="garis"><?php echo "$r[nama_jabatan]";?></td>
+        <?php
+        $detaildata=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='6'");
+        $dd=mysql_fetch_array($detaildata);
+                if ($dd['isi_pengaturan']== 0){
+        ?>
+        <td class="garis"><b><?php echo "$r[nama_gurustaff]";?></b></td>
+        <?php }
+        else { ?>
+        
+        <td class="garis"><a href="<?php echo "?p=detailstaff&nip=$r[nip]";?>" title="Klik untuk melihat detail data"><b><?php echo "$r[nama_gurustaff]";?></b></a></td>
+        <?php } ?>
+        <td class="garis"><?php echo "$r[jenkel]";?></td>
+        <td class="garis"><?php echo "$r[nama_jabatan]";?></td>
 </tr>
 <?php $no++; }}
 
@@ -837,10 +837,10 @@ else { ?>
 <tr class="garis"><td colspan="4"><b>Data staff belum ada</b></td></tr>
 <?php } ?>
 </table>
-				<div id="pageNavPosition"></div>
-		
-		
-			    <script type="text/javascript"><!--
+                                <div id="pageNavPosition"></div>
+                
+                
+                            <script type="text/javascript"><!--
         var pager = new Pager('results', 30); 
         pager.init(); 
         pager.showPageNav('pager', 'pageNavPosition'); 
@@ -861,9 +861,9 @@ else { ?>
 
 <form method="POST" action="?p=staffjk" style="float:left">
 <select name="jk" onChange="this.form.submit()">
-	<option selected>Jenis Kelamin</option>
-	<option value="L">Laki laki</option>
-	<option value="P">Perempuan</option>
+        <option selected>Jenis Kelamin</option>
+        <option value="L">Laki laki</option>
+        <option value="P">Perempuan</option>
 </select>
 </form>
 
@@ -882,19 +882,19 @@ if($cek_staff > 0){
 while($r=mysql_fetch_array($gurustaff)){
 ?>
 <tr class="garis"><td class="garis"><?php echo "$no";?></td>
-	<?php
-	$detaildata=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='6'");
-	$dd=mysql_fetch_array($detaildata);
-		if ($dd['isi_pengaturan']== 0){
-	?>
-	<td class="garis"><b><?php echo "$r[nama_gurustaff]";?></b></td>
-	<?php }
-	else { ?>
-	
-	<td class="garis"><a href="<?php echo "?p=detailstaff&nip=$r[nip]";?>" title="Klik untuk melihat detail data"><b><?php echo "$r[nama_gurustaff]";?></b></a></td>
-	<?php } ?>
-	<td class="garis"><?php echo "$r[jenkel]";?></td>
-	<td class="garis"><?php echo "$r[nama_jabatan]";?></td>
+        <?php
+        $detaildata=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='6'");
+        $dd=mysql_fetch_array($detaildata);
+                if ($dd['isi_pengaturan']== 0){
+        ?>
+        <td class="garis"><b><?php echo "$r[nama_gurustaff]";?></b></td>
+        <?php }
+        else { ?>
+        
+        <td class="garis"><a href="<?php echo "?p=detailstaff&nip=$r[nip]";?>" title="Klik untuk melihat detail data"><b><?php echo "$r[nama_gurustaff]";?></b></a></td>
+        <?php } ?>
+        <td class="garis"><?php echo "$r[jenkel]";?></td>
+        <td class="garis"><?php echo "$r[nama_jabatan]";?></td>
 </tr>
 <?php $no++; } }
 else {
@@ -907,10 +907,10 @@ else { echo "Perempuan"; }
  belum ada</b></td></tr>
 <?php } ?>
 </table>
-				<div id="pageNavPosition"></div>
-		
-		
-			    <script type="text/javascript"><!--
+                                <div id="pageNavPosition"></div>
+                
+                
+                            <script type="text/javascript"><!--
         var pager = new Pager('results', 30); 
         pager.init(); 
         pager.showPageNav('pager', 'pageNavPosition'); 
@@ -932,9 +932,9 @@ $cari = htmlentities(htmlspecialchars($cari), ENT_QUOTES);
 
 <form method="POST" action="?p=staffjk" style="float:left">
 <select name="jk" onChange="this.form.submit()">
-	<option selected>Jenis Kelamin</option>
-	<option value="L">Laki laki</option>
-	<option value="P">Perempuan</option>
+        <option selected>Jenis Kelamin</option>
+        <option value="L">Laki laki</option>
+        <option value="P">Perempuan</option>
 </select>
 </form>
 
@@ -953,19 +953,19 @@ if ($hitung > 0){
 while($r=mysql_fetch_array($gurustaff)){
 ?>
 <tr class="garis"><td class="garis"><?php echo "$no";?></td>
-	<?php
-	$detaildata=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='6'");
-	$dd=mysql_fetch_array($detaildata);
-		if ($dd['isi_pengaturan']== 0){
-	?>
-	<td class="garis"><b><?php echo "$r[nama_gurustaff]";?></b></td>
-	<?php }
-	else { ?>
-	
-	<td class="garis"><a href="<?php echo "?p=detailstaff&nip=$r[nip]";?>" title="Klik untuk melihat detail data"><b><?php echo "$r[nama_gurustaff]";?></b></a></td>
-	<?php } ?>
-	<td class="garis"><?php echo "$r[jenkel]";?></td>
-	<td class="garis"><?php echo "$r[nama_jabatan]";?></td>
+        <?php
+        $detaildata=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='6'");
+        $dd=mysql_fetch_array($detaildata);
+                if ($dd['isi_pengaturan']== 0){
+        ?>
+        <td class="garis"><b><?php echo "$r[nama_gurustaff]";?></b></td>
+        <?php }
+        else { ?>
+        
+        <td class="garis"><a href="<?php echo "?p=detailstaff&nip=$r[nip]";?>" title="Klik untuk melihat detail data"><b><?php echo "$r[nama_gurustaff]";?></b></a></td>
+        <?php } ?>
+        <td class="garis"><?php echo "$r[jenkel]";?></td>
+        <td class="garis"><?php echo "$r[nama_jabatan]";?></td>
 </tr>
 <?php $no++; }}
 else {
@@ -973,10 +973,10 @@ echo "<tr class='garis'><td colspan='4'>Data tidak ditemukan</td></tr>";
 }
  ?>
 </table>
-				<div id="pageNavPosition"></div>
-		
-		
-			    <script type="text/javascript"><!--
+                                <div id="pageNavPosition"></div>
+                
+                
+                            <script type="text/javascript"><!--
         var pager = new Pager('results', 30); 
         pager.init(); 
         pager.showPageNav('pager', 'pageNavPosition'); 
@@ -993,9 +993,9 @@ echo "<tr class='garis'><td colspan='4'>Data tidak ditemukan</td></tr>";
 <div id="konten">
 <div id="lebar">
 <?php
-	$detaildata=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='6'");
-	$dd=mysql_fetch_array($detaildata);
-		if ($dd['isi_pengaturan'] > 0){
+        $detaildata=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='6'");
+        $dd=mysql_fetch_array($detaildata);
+                if ($dd['isi_pengaturan'] > 0){
 $detailstaff=mysql_query("SELECT * FROM sh_guru_staff, sh_jabatan WHERE sh_guru_staff.id_jabatan=sh_jabatan.id_jabatan AND nip='$_GET[nip]'");
 $r=mysql_fetch_array($detailstaff);
 ?>
@@ -1024,21 +1024,21 @@ $r=mysql_fetch_array($detailstaff);
 
 <form method="POST" action="?p=siswajk" style="float:left">
 <select name="jk" onChange="this.form.submit()">
-	<option selected>Jenis Kelamin</option>
-	<option value="L">Laki laki</option>
-	<option value="P">Perempuan</option>
+        <option selected>Jenis Kelamin</option>
+        <option value="L">Laki laki</option>
+        <option value="P">Perempuan</option>
 </select>
 </form>
 
 <form method="POST" action="?p=siswakelas" style="float:left; margin-left: 5px">
 <select name="kelas" onChange="this.form.submit()">
-	<option selected>Kelas</option>
-	<?php
-	$kelas=mysql_query("SELECT * FROM sh_kelas ORDER BY id_kelas");
-	while($k=mysql_fetch_array($kelas)){
-	?>
-	<option value="<?php echo "$k[id_kelas]";?>"><?php echo "$k[nama_kelas]";?></option>
-	<?php } ?>
+        <option selected>Kelas</option>
+        <?php
+        $kelas=mysql_query("SELECT * FROM sh_kelas ORDER BY id_kelas");
+        while($k=mysql_fetch_array($kelas)){
+        ?>
+        <option value="<?php echo "$k[id_kelas]";?>"><?php echo "$k[nama_kelas]";?></option>
+        <?php } ?>
 </select>
 </form>
 
@@ -1057,29 +1057,29 @@ if($hitungsiswa > 0){
 while($r=mysql_fetch_array($siswa)){
 ?>
 <tr class="garis"><td class="garis"><?php echo "$no";?></td>
-	<?php
-	$detaildata=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='4'");
-	$dd=mysql_fetch_array($detaildata);
-		if ($dd['isi_pengaturan']== 0){
-	?>
-	<td class="garis"><b><?php echo "$r[nama_siswa]";?></b></td>
-	<?php }
-	else { ?>
-	
-	<td class="garis"><a href="<?php echo "?p=detailsiswa&nis=$r[nis]";?>" title="Klik untuk melihat detail data"><b><?php echo "$r[nama_siswa]";?></b></a></td>
-	<?php } ?>
-	<td class="garis"><?php echo "$r[jenkel]";?></td>
-	<td class="garis"><?php echo "$r[nama_kelas]";?></td>
+        <?php
+        $detaildata=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='4'");
+        $dd=mysql_fetch_array($detaildata);
+                if ($dd['isi_pengaturan']== 0){
+        ?>
+        <td class="garis"><b><?php echo "$r[nama_siswa]";?></b></td>
+        <?php }
+        else { ?>
+        
+        <td class="garis"><a href="<?php echo "?p=detailsiswa&nis=$r[nis]";?>" title="Klik untuk melihat detail data"><b><?php echo "$r[nama_siswa]";?></b></a></td>
+        <?php } ?>
+        <td class="garis"><?php echo "$r[jenkel]";?></td>
+        <td class="garis"><?php echo "$r[nama_kelas]";?></td>
 </tr>
 <?php $no++; }}
 else { ?>
 <tr class="garis"><td colspan="4"><b>Data siswa belum ada</b></td></tr>
 <?php } ?>
 </table>
-				<div id="pageNavPosition"></div>
-		
-		
-			    <script type="text/javascript"><!--
+                                <div id="pageNavPosition"></div>
+                
+                
+                            <script type="text/javascript"><!--
         var pager = new Pager('results', 30); 
         pager.init(); 
         pager.showPageNav('pager', 'pageNavPosition'); 
@@ -1101,21 +1101,21 @@ $cari = htmlentities(htmlspecialchars($cari), ENT_QUOTES);
 
 <form method="POST" action="?p=siswajk" style="float:left">
 <select name="jk" onChange="this.form.submit()">
-	<option selected>Jenis Kelamin</option>
-	<option value="L">Laki laki</option>
-	<option value="P">Perempuan</option>
+        <option selected>Jenis Kelamin</option>
+        <option value="L">Laki laki</option>
+        <option value="P">Perempuan</option>
 </select>
 </form>
 
 <form method="POST" action="?p=siswakelas" style="float:left; margin-left: 5px">
 <select name="kelas" onChange="this.form.submit()">
-	<option selected>Kelas</option>
-	<?php
-	$kelas=mysql_query("SELECT * FROM sh_kelas ORDER BY id_kelas");
-	while($k=mysql_fetch_array($kelas)){
-	?>
-	<option value="<?php echo "$k[id_kelas]";?>"><?php echo "$k[nama_kelas]";?></option>
-	<?php } ?>
+        <option selected>Kelas</option>
+        <?php
+        $kelas=mysql_query("SELECT * FROM sh_kelas ORDER BY id_kelas");
+        while($k=mysql_fetch_array($kelas)){
+        ?>
+        <option value="<?php echo "$k[id_kelas]";?>"><?php echo "$k[nama_kelas]";?></option>
+        <?php } ?>
 </select>
 </form>
 
@@ -1133,19 +1133,19 @@ if ($hitung > 0){
 while($r=mysql_fetch_array($siswa)){
 ?>
 <tr class="garis"><td class="garis"><?php echo "$no";?></td>
-	<?php
-	$detaildata=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='4'");
-	$dd=mysql_fetch_array($detaildata);
-		if ($dd['isi_pengaturan']== 0){
-	?>
-	<td class="garis"><b><?php echo "$r[nama_siswa]";?></b></td>
-	<?php }
-	else { ?>
-	
-	<td class="garis"><a href="<?php echo "?p=detailsiswa&nis=$r[nis]";?>" title="Klik untuk melihat detail data"><b><?php echo "$r[nama_siswa]";?></b></a></td>
-	<?php } ?>
-	<td class="garis"><?php echo "$r[jenkel]";?></td>
-	<td class="garis"><?php echo "$r[nama_kelas]";?></td>
+        <?php
+        $detaildata=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='4'");
+        $dd=mysql_fetch_array($detaildata);
+                if ($dd['isi_pengaturan']== 0){
+        ?>
+        <td class="garis"><b><?php echo "$r[nama_siswa]";?></b></td>
+        <?php }
+        else { ?>
+        
+        <td class="garis"><a href="<?php echo "?p=detailsiswa&nis=$r[nis]";?>" title="Klik untuk melihat detail data"><b><?php echo "$r[nama_siswa]";?></b></a></td>
+        <?php } ?>
+        <td class="garis"><?php echo "$r[jenkel]";?></td>
+        <td class="garis"><?php echo "$r[nama_kelas]";?></td>
 </tr>
 <?php $no++; }}
 else {
@@ -1153,10 +1153,10 @@ echo "<tr class='garis'><td colspan='4'>Data tidak ditemukan</td></tr>";
 }
 ?>
 </table>
-				<div id="pageNavPosition"></div>
-		
-		
-			    <script type="text/javascript"><!--
+                                <div id="pageNavPosition"></div>
+                
+                
+                            <script type="text/javascript"><!--
         var pager = new Pager('results', 30); 
         pager.init(); 
         pager.showPageNav('pager', 'pageNavPosition'); 
@@ -1175,21 +1175,21 @@ echo "<tr class='garis'><td colspan='4'>Data tidak ditemukan</td></tr>";
 
 <form method="POST" action="?p=siswajk" style="float:left">
 <select name="jk" onChange="this.form.submit()">
-	<option selected>Jenis Kelamin</option>
-	<option value="L">Laki laki</option>
-	<option value="P">Perempuan</option>
+        <option selected>Jenis Kelamin</option>
+        <option value="L">Laki laki</option>
+        <option value="P">Perempuan</option>
 </select>
 </form>
 
 <form method="POST" action="?p=siswakelas" style="float:left; margin-left: 5px">
 <select name="kelas" onChange="this.form.submit()">
-	<option selected>Kelas</option>
-	<?php
-	$kelas=mysql_query("SELECT * FROM sh_kelas ORDER BY id_kelas");
-	while($k=mysql_fetch_array($kelas)){
-	?>
-	<option value="<?php echo "$k[id_kelas]";?>"><?php echo "$k[nama_kelas]";?></option>
-	<?php } ?>
+        <option selected>Kelas</option>
+        <?php
+        $kelas=mysql_query("SELECT * FROM sh_kelas ORDER BY id_kelas");
+        while($k=mysql_fetch_array($kelas)){
+        ?>
+        <option value="<?php echo "$k[id_kelas]";?>"><?php echo "$k[nama_kelas]";?></option>
+        <?php } ?>
 </select>
 </form>
 
@@ -1207,19 +1207,19 @@ if ($hitung > 0){
 while($r=mysql_fetch_array($siswa)){
 ?>
 <tr class="garis"><td class="garis"><?php echo "$no";?></td>
-	<?php
-	$detaildata=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='4'");
-	$dd=mysql_fetch_array($detaildata);
-		if ($dd['isi_pengaturan']== 0){
-	?>
-	<td class="garis"><b><?php echo "$r[nama_siswa]";?></b></td>
-	<?php }
-	else { ?>
-	
-	<td class="garis"><a href="<?php echo "?p=detailsiswa&nis=$r[nis]";?>" title="Klik untuk melihat detail data"><b><?php echo "$r[nama_siswa]";?></b></a></td>
-	<?php } ?>
-	<td class="garis"><?php echo "$r[jenkel]";?></td>
-	<td class="garis"><?php echo "$r[nama_kelas]";?></td>
+        <?php
+        $detaildata=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='4'");
+        $dd=mysql_fetch_array($detaildata);
+                if ($dd['isi_pengaturan']== 0){
+        ?>
+        <td class="garis"><b><?php echo "$r[nama_siswa]";?></b></td>
+        <?php }
+        else { ?>
+        
+        <td class="garis"><a href="<?php echo "?p=detailsiswa&nis=$r[nis]";?>" title="Klik untuk melihat detail data"><b><?php echo "$r[nama_siswa]";?></b></a></td>
+        <?php } ?>
+        <td class="garis"><?php echo "$r[jenkel]";?></td>
+        <td class="garis"><?php echo "$r[nama_kelas]";?></td>
 </tr>
 <?php $no++; } }
 
@@ -1230,10 +1230,10 @@ else { echo "Perempuan"; }
 ?> belum tersedia</td></tr>
 <?php } ?>
 </table>
-				<div id="pageNavPosition"></div>
-		
-		
-			    <script type="text/javascript"><!--
+                                <div id="pageNavPosition"></div>
+                
+                
+                            <script type="text/javascript"><!--
         var pager = new Pager('results', 30); 
         pager.init(); 
         pager.showPageNav('pager', 'pageNavPosition'); 
@@ -1252,21 +1252,21 @@ else { echo "Perempuan"; }
 
 <form method="POST" action="?p=siswajk" style="float:left">
 <select name="jk" onChange="this.form.submit()">
-	<option selected>Jenis Kelamin</option>
-	<option value="L">Laki laki</option>
-	<option value="P">Perempuan</option>
+        <option selected>Jenis Kelamin</option>
+        <option value="L">Laki laki</option>
+        <option value="P">Perempuan</option>
 </select>
 </form>
 
 <form method="POST" action="?p=siswakelas" style="float:left; margin-left: 5px">
 <select name="kelas" onChange="this.form.submit()">
-	<option selected>Kelas</option>
-	<?php
-	$kelas=mysql_query("SELECT * FROM sh_kelas ORDER BY id_kelas");
-	while($k=mysql_fetch_array($kelas)){
-	?>
-	<option value="<?php echo "$k[id_kelas]";?>"><?php echo "$k[nama_kelas]";?></option>
-	<?php } ?>
+        <option selected>Kelas</option>
+        <?php
+        $kelas=mysql_query("SELECT * FROM sh_kelas ORDER BY id_kelas");
+        while($k=mysql_fetch_array($kelas)){
+        ?>
+        <option value="<?php echo "$k[id_kelas]";?>"><?php echo "$k[nama_kelas]";?></option>
+        <?php } ?>
 </select>
 </form>
 
@@ -1284,19 +1284,19 @@ if ($hitung > 0){
 while($r=mysql_fetch_array($siswa)){
 ?>
 <tr class="garis"><td class="garis"><?php echo "$no";?></td>
-	<?php
-	$detaildata=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='4'");
-	$dd=mysql_fetch_array($detaildata);
-		if ($dd['isi_pengaturan']== 0){
-	?>
-	<td class="garis"><b><?php echo "$r[nama_siswa]";?></b></td>
-	<?php }
-	else { ?>
-	
-	<td class="garis"><a href="<?php echo "?p=detailsiswa&nis=$r[nis]";?>" title="Klik untuk melihat detail data"><b><?php echo "$r[nama_siswa]";?></b></a></td>
-	<?php } ?>
-	<td class="garis"><?php echo "$r[jenkel]";?></td>
-	<td class="garis"><?php echo "$r[nama_kelas]";?></td>
+        <?php
+        $detaildata=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='4'");
+        $dd=mysql_fetch_array($detaildata);
+                if ($dd['isi_pengaturan']== 0){
+        ?>
+        <td class="garis"><b><?php echo "$r[nama_siswa]";?></b></td>
+        <?php }
+        else { ?>
+        
+        <td class="garis"><a href="<?php echo "?p=detailsiswa&nis=$r[nis]";?>" title="Klik untuk melihat detail data"><b><?php echo "$r[nama_siswa]";?></b></a></td>
+        <?php } ?>
+        <td class="garis"><?php echo "$r[jenkel]";?></td>
+        <td class="garis"><?php echo "$r[nama_kelas]";?></td>
 </tr>
 <?php $no++; } }
 
@@ -1309,10 +1309,10 @@ echo "$nk[nama_kelas]";
 ?> belum tersedia </td></tr>
 <?php } ?>
 </table>
-				<div id="pageNavPosition"></div>
-		
-		
-			    <script type="text/javascript"><!--
+                                <div id="pageNavPosition"></div>
+                
+                
+                            <script type="text/javascript"><!--
         var pager = new Pager('results', 30); 
         pager.init(); 
         pager.showPageNav('pager', 'pageNavPosition'); 
@@ -1329,9 +1329,9 @@ echo "$nk[nama_kelas]";
 <div id="konten">
 <div id="lebar">
 <?php
-	$detaildata=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='4'");
-	$dd=mysql_fetch_array($detaildata);
-		if ($dd['isi_pengaturan'] > 0){
+        $detaildata=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='4'");
+        $dd=mysql_fetch_array($detaildata);
+                if ($dd['isi_pengaturan'] > 0){
 $detailsiswa=mysql_query("SELECT * FROM sh_siswa, sh_kelas WHERE sh_siswa.id_kelas=sh_kelas.id_kelas AND nis='$_GET[nis]'");
 $r=mysql_fetch_array($detailsiswa);
 ?>
@@ -1359,9 +1359,9 @@ $r=mysql_fetch_array($detailsiswa);
 
 <form method="POST" action="?p=alumnijk" style="float:left">
 <select name="jk" onChange="this.form.submit()">
-	<option selected>Jenis Kelamin</option>
-	<option value="L">Laki laki</option>
-	<option value="P">Perempuan</option>
+        <option selected>Jenis Kelamin</option>
+        <option value="L">Laki laki</option>
+        <option value="P">Perempuan</option>
 </select>
 </form>
 
@@ -1380,19 +1380,19 @@ if($hitungalumni > 0){
 while($r=mysql_fetch_array($alumni)){
 ?>
 <tr class="garis"><td class="garis"><?php echo "$no";?></td>
-	<?php
-	$detaildata=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='5'");
-	$dd=mysql_fetch_array($detaildata);
-		if ($dd['isi_pengaturan']== 0){
-	?>
-	<td class="garis"><b><?php echo "$r[nama_siswa]";?></b></td>
-	<?php }
-	else { ?>
-	
-	<td class="garis"><a href="<?php echo "?p=detailalumni&id=$r[id_siswa]";?>" title="Klik untuk melihat detail data"><b><?php echo "$r[nama_siswa]";?></b></a></td>
-	<?php } ?>
-	<td class="garis"><?php echo "$r[jenkel]";?></td>
-	<td class="garis"><?php echo "$r[tahun_lulus]";?></td>
+        <?php
+        $detaildata=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='5'");
+        $dd=mysql_fetch_array($detaildata);
+                if ($dd['isi_pengaturan']== 0){
+        ?>
+        <td class="garis"><b><?php echo "$r[nama_siswa]";?></b></td>
+        <?php }
+        else { ?>
+        
+        <td class="garis"><a href="<?php echo "?p=detailalumni&id=$r[id_siswa]";?>" title="Klik untuk melihat detail data"><b><?php echo "$r[nama_siswa]";?></b></a></td>
+        <?php } ?>
+        <td class="garis"><?php echo "$r[jenkel]";?></td>
+        <td class="garis"><?php echo "$r[tahun_lulus]";?></td>
 </tr>
 <?php $no++; }}
 
@@ -1400,16 +1400,16 @@ else { ?>
 <tr class="garis"><td colspan="4"><b>Data alumni belum ada</b></td></tr>
 <?php } ?>
 </table>
-				<div id="pageNavPosition"></div>
-		
-		
-			    <script type="text/javascript"><!--
+                                <div id="pageNavPosition"></div>
+                
+                
+                            <script type="text/javascript"><!--
         var pager = new Pager('results', 30); 
         pager.init(); 
         pager.showPageNav('pager', 'pageNavPosition'); 
         pager.showPage(1);
     //--></script>
-	
+        
 <?php
 $formalumni=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='7'");
 $f=mysql_fetch_array($formalumni);
@@ -1433,9 +1433,9 @@ Klik <a href="?p=formalumni"><b>&raquo;disini&laquo;</b></a> untuk mengisi form 
 
 <form method="POST" action="?p=alumnijk" style="float:left">
 <select name="jk" onChange="this.form.submit()">
-	<option selected>Jenis Kelamin</option>
-	<option value="L">Laki laki</option>
-	<option value="P">Perempuan</option>
+        <option selected>Jenis Kelamin</option>
+        <option value="L">Laki laki</option>
+        <option value="P">Perempuan</option>
 </select>
 </form>
 
@@ -1453,19 +1453,19 @@ if($cek_alumni > 0){
 while($r=mysql_fetch_array($alumni)){
 ?>
 <tr class="garis"><td class="garis"><?php echo "$no";?></td>
-	<?php
-	$detaildata=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='5'");
-	$dd=mysql_fetch_array($detaildata);
-		if ($dd['isi_pengaturan']== 0){
-	?>
-	<td class="garis"><b><?php echo "$r[nama_siswa]";?></b></td>
-	<?php }
-	else { ?>
-	
-	<td class="garis"><a href="<?php echo "?p=detailalumni&id=$r[id_siswa]";?>" title="Klik untuk melihat detail data"><b><?php echo "$r[nama_siswa]";?></b></a></td>
-	<?php } ?>
-	<td class="garis"><?php echo "$r[jenkel]";?></td>
-	<td class="garis"><?php echo "$r[tahun_lulus]";?></td>
+        <?php
+        $detaildata=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='5'");
+        $dd=mysql_fetch_array($detaildata);
+                if ($dd['isi_pengaturan']== 0){
+        ?>
+        <td class="garis"><b><?php echo "$r[nama_siswa]";?></b></td>
+        <?php }
+        else { ?>
+        
+        <td class="garis"><a href="<?php echo "?p=detailalumni&id=$r[id_siswa]";?>" title="Klik untuk melihat detail data"><b><?php echo "$r[nama_siswa]";?></b></a></td>
+        <?php } ?>
+        <td class="garis"><?php echo "$r[jenkel]";?></td>
+        <td class="garis"><?php echo "$r[tahun_lulus]";?></td>
 </tr>
 <?php $no++; } }
 
@@ -1478,17 +1478,17 @@ else { echo "Perempuan"; }
 </td></tr>
 <?php } ?>
 </table>
-				<div id="pageNavPosition"></div>
-		
-		
-			    <script type="text/javascript"><!--
+                                <div id="pageNavPosition"></div>
+                
+                
+                            <script type="text/javascript"><!--
         var pager = new Pager('results', 30); 
         pager.init(); 
         pager.showPageNav('pager', 'pageNavPosition'); 
         pager.showPage(1);
     //--></script>
-	
-	
+        
+        
 <?php
 $formalumni=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='7'");
 $f=mysql_fetch_array($formalumni);
@@ -1515,9 +1515,9 @@ $cari = htmlentities(htmlspecialchars($cari), ENT_QUOTES);
 
 <form method="POST" action="?p=alumnijk" style="float:left">
 <select name="jk" onChange="this.form.submit()">
-	<option selected>Jenis Kelamin</option>
-	<option value="L">Laki laki</option>
-	<option value="P">Perempuan</option>
+        <option selected>Jenis Kelamin</option>
+        <option value="L">Laki laki</option>
+        <option value="P">Perempuan</option>
 </select>
 </form>
 
@@ -1536,35 +1536,35 @@ if ($hitung > 0){
 while($r=mysql_fetch_array($alumni)){
 ?>
 <tr class="garis"><td class="garis"><?php echo "$no";?></td>
-	<?php
-	$detaildata=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='5'");
-	$dd=mysql_fetch_array($detaildata);
-		if ($dd['isi_pengaturan']== 0){
-	?>
-	<td class="garis"><b><?php echo "$r[nama_siswa]";?></b></td>
-	<?php }
-	else { ?>
-	
-	<td class="garis"><a href="<?php echo "?p=detailalumni&id=$r[id_siswa]";?>" title="Klik untuk melihat detail data"><b><?php echo "$r[nama_siswa]";?></b></a></td>
-	<?php } ?>
-	<td class="garis"><?php echo "$r[jenkel]";?></td>
-	<td class="garis"><?php echo "$r[tahun_lulus]";?></td>
+        <?php
+        $detaildata=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='5'");
+        $dd=mysql_fetch_array($detaildata);
+                if ($dd['isi_pengaturan']== 0){
+        ?>
+        <td class="garis"><b><?php echo "$r[nama_siswa]";?></b></td>
+        <?php }
+        else { ?>
+        
+        <td class="garis"><a href="<?php echo "?p=detailalumni&id=$r[id_siswa]";?>" title="Klik untuk melihat detail data"><b><?php echo "$r[nama_siswa]";?></b></a></td>
+        <?php } ?>
+        <td class="garis"><?php echo "$r[jenkel]";?></td>
+        <td class="garis"><?php echo "$r[tahun_lulus]";?></td>
 </tr>
 <?php $no++; }}
 else  {
 echo "<tr class='garis'><td colspan='4'>Data tidak ditemukan</td></tr>";
 }?>
 </table>
-				<div id="pageNavPosition"></div>
-		
-		
-			    <script type="text/javascript"><!--
+                                <div id="pageNavPosition"></div>
+                
+                
+                            <script type="text/javascript"><!--
         var pager = new Pager('results', 30); 
         pager.init(); 
         pager.showPageNav('pager', 'pageNavPosition'); 
         pager.showPage(1);
     //--></script>
-	
+        
 <?php
 $formalumni=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='7'");
 $f=mysql_fetch_array($formalumni);
@@ -1586,9 +1586,9 @@ Klik <a href="?p=formalumni"><b>&raquo;disini&laquo;</b></a> untuk mengisi form 
 <div id="konten">
 <div id="lebar">
 <?php
-	$detaildata=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='5'");
-	$dd=mysql_fetch_array($detaildata);
-		if ($dd['isi_pengaturan'] > 0){
+        $detaildata=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='5'");
+        $dd=mysql_fetch_array($detaildata);
+                if ($dd['isi_pengaturan'] > 0){
 $detailalumni=mysql_query("SELECT * FROM sh_siswa WHERE id_siswa='$_GET[id]'");
 $r=mysql_fetch_array($detailalumni);
 ?>
@@ -1628,40 +1628,40 @@ Silahkan mengisi data alumni pada form dibawah ini, diharapkan data yang anda ma
 </p>
 <form method="POST" action="kontenweb/insert_alumni.php" name="tambahalumni" id="tambahalumni">
 <table style="margin-top: 20px">
-	<tr><td width="135px"><b>Nama Alumni *</b></td><td><input type="text" name="nama_alumni" class="sedang"></td></tr>
-			<tr><td width="135px"><b>Jenis Kelamin *</b></td>
-			<td>
-					<input type="radio" name="jk" value="L"/>Laki-laki&nbsp;
-					<input type="radio" name="jk" value="P"/>Perempuan
-			</td></tr>
-			<tr><td width="135px"><b>Tempat, Tanggal Lahir *</b></td><td>
-			<input type="text" name="tempat_lahir" class="sedang">, 
-			<input type="text" id="tanggal" name="tanggal_lahir" class="sedang"></td></tr>
-			<tr><td width="135px"><b>Alamat</b></td><td><textarea name="alamat" style="height: 100px"></textarea></td></tr>
-			<tr><td width="135px"><b>Tahun Lulus *</b></td><td>
-			<?php
-				$thn_skrg=date("Y");
-				echo "<select name=tahun_lulus style='margin: 0;'>
-				<option value='' selected>Pilih Tahun</option>";
-				for ($thn=1990;$thn<=$thn_skrg;$thn++){
-				echo "<option value=$thn>$thn</option>";
-				}
-				echo "</select>"; ?>
-			</td></tr>
-			
-			<tr><td width="135px"><b>Email</b></td><td><input type="text" name="email" class="sedang"></td></tr>
-			<tr><td width="135px"><b>Telepon/ HP</b></td><td><input type="text" name="telepon" class="sedang"></td></tr>
-			
-			<tr><td width="135px"><b>Pekerjaan Sekarang</b></td><td><input type="text" name="pekerjaan_sekarang" class="panjang"></td></tr>
-			<tr><td width="135px"><b>Informasi Tambahan</b></td><td><textarea name="info_tambahan" style="height: 100px"></textarea></td></tr>
-			<tr><td>&nbsp;</td><td>
-			<img src="kontenweb/captcha.php?date=<?php echo date('YmdHis');?>" alt="security image" />
-			</td></tr>
-			<tr><td>&nbsp;</td><td><input type="text" name="kode" class="pendek">&nbsp;<small><i>Masukkan kode diatas</i></td></tr>
-			<tr><td></td><td>
-			<input type="submit" class="tombol" value="Simpan">
-			<input type="reset" class="tombol" value="Reset">
-			</td></tr>
+        <tr><td width="135px"><b>Nama Alumni *</b></td><td><input type="text" name="nama_alumni" class="sedang"></td></tr>
+                        <tr><td width="135px"><b>Jenis Kelamin *</b></td>
+                        <td>
+                                        <input type="radio" name="jk" value="L"/>Laki-laki&nbsp;
+                                        <input type="radio" name="jk" value="P"/>Perempuan
+                        </td></tr>
+                        <tr><td width="135px"><b>Tempat, Tanggal Lahir *</b></td><td>
+                        <input type="text" name="tempat_lahir" class="sedang">, 
+                        <input type="text" id="tanggal" name="tanggal_lahir" class="sedang"></td></tr>
+                        <tr><td width="135px"><b>Alamat</b></td><td><textarea name="alamat" style="height: 100px"></textarea></td></tr>
+                        <tr><td width="135px"><b>Tahun Lulus *</b></td><td>
+                        <?php
+                                $thn_skrg=date("Y");
+                                echo "<select name=tahun_lulus style='margin: 0;'>
+                                <option value='' selected>Pilih Tahun</option>";
+                                for ($thn=1990;$thn<=$thn_skrg;$thn++){
+                                echo "<option value=$thn>$thn</option>";
+                                }
+                                echo "</select>"; ?>
+                        </td></tr>
+                        
+                        <tr><td width="135px"><b>Email</b></td><td><input type="text" name="email" class="sedang"></td></tr>
+                        <tr><td width="135px"><b>Telepon/ HP</b></td><td><input type="text" name="telepon" class="sedang"></td></tr>
+                        
+                        <tr><td width="135px"><b>Pekerjaan Sekarang</b></td><td><input type="text" name="pekerjaan_sekarang" class="panjang"></td></tr>
+                        <tr><td width="135px"><b>Informasi Tambahan</b></td><td><textarea name="info_tambahan" style="height: 100px"></textarea></td></tr>
+                        <tr><td>&nbsp;</td><td>
+                        <img src="kontenweb/captcha.php?date=<?php echo date('YmdHis');?>" alt="security image" />
+                        </td></tr>
+                        <tr><td>&nbsp;</td><td><input type="text" name="kode" class="pendek">&nbsp;<small><i>Masukkan kode diatas</i></td></tr>
+                        <tr><td></td><td>
+                        <input type="submit" class="tombol" value="Simpan">
+                        <input type="reset" class="tombol" value="Reset">
+                        </td></tr>
 </table>
 </form>
 <?php include "form_alumni.php"; } ?>
@@ -1680,15 +1680,15 @@ Silahkan mengisi buku tamu pada form dibawah ini untuk memberikan kritik maupun 
 </p>
 <form method="POST" action="kontenweb/insert_bukutamu.php" name="formbuku" id="formbuku">
 <table style="margin-top: 20px">
-	<tr><td><b>Nama *</b><td>:</td><td><input type="text" class="sedang" name="nama">&nbsp;<small><i>Harus diisi</i></small></td></tr>
-	<tr><td><b>Email *</b><td>:</td><td><input type="text" class="sedang" name="email">&nbsp;<small><i>Harus diisi (Tidak akan diterbitkan)</i></small></td></tr>
-	<tr><td><b>Subjek *</b><td>:</td><td><input type="text" class="panjang" name="subjek"></td></tr>
-	<tr><td><b>Pesan *</b><td>:</td><td><textarea name="pesan" style="height: 150px"></textarea></td></tr>
-	<tr><td>&nbsp;</td><td></td><td>
-	<img src="kontenweb/captcha.php?date=<?php echo date('YmdHis');?>" alt="security image" />
-	</td></tr>
-	<tr><td>&nbsp;</td><td></td><td><input type="text" name="kode" class="pendek">&nbsp;<small><i>Masukkan kode diatas</i></td></tr>
-	<tr><td>&nbsp;</td><td></td><td><input type="submit" class="tombol" value="Kirim">&nbsp;<input type="reset" class="tombol" value="Reset"></td></tr>
+        <tr><td><b>Nama *</b><td>:</td><td><input type="text" class="sedang" name="nama">&nbsp;<small><i>Harus diisi</i></small></td></tr>
+        <tr><td><b>Email *</b><td>:</td><td><input type="text" class="sedang" name="email">&nbsp;<small><i>Harus diisi (Tidak akan diterbitkan)</i></small></td></tr>
+        <tr><td><b>Subjek *</b><td>:</td><td><input type="text" class="panjang" name="subjek"></td></tr>
+        <tr><td><b>Pesan *</b><td>:</td><td><textarea name="pesan" style="height: 150px"></textarea></td></tr>
+        <tr><td>&nbsp;</td><td></td><td>
+        <img src="kontenweb/captcha.php?date=<?php echo date('YmdHis');?>" alt="security image" />
+        </td></tr>
+        <tr><td>&nbsp;</td><td></td><td><input type="text" name="kode" class="pendek">&nbsp;<small><i>Masukkan kode diatas</i></td></tr>
+        <tr><td>&nbsp;</td><td></td><td><input type="submit" class="tombol" value="Kirim">&nbsp;<input type="reset" class="tombol" value="Reset"></td></tr>
 
 </table>
 </form>
@@ -1701,14 +1701,14 @@ if ($tp['isi_pengaturan']== 1){
 ?>
 
 <ul style="list-style: none; padding-left: 5px;">
-	<?php $bukutamu=mysql_query("SELECT * FROM sh_buku_tamu WHERE status='1' ORDER BY id_bukutamu DESC");
-			while($b=mysql_fetch_array($bukutamu)){ ?>
-	<li style="padding: 5px 0 5px 0; border-bottom: 1px solid #dcdcdc">
-	<p><b><?php echo "<a href=''>$b[nama_bukutamu]</a>";?></b><br><small><?php echo "$b[tanggal_kirim]";?></small></p>
-	<p><?php echo "$b[isi_pesan]"?></p>
-	<?php } ?>
-	</li>
-		
+        <?php $bukutamu=mysql_query("SELECT * FROM sh_buku_tamu WHERE status='1' ORDER BY id_bukutamu DESC");
+                        while($b=mysql_fetch_array($bukutamu)){ ?>
+        <li style="padding: 5px 0 5px 0; border-bottom: 1px solid #dcdcdc">
+        <p><b><?php echo "<a href=''>$b[nama_bukutamu]</a>";?></b><br><small><?php echo "$b[tanggal_kirim]";?></small></p>
+        <p><?php echo "$b[isi_pesan]"?></p>
+        <?php } ?>
+        </li>
+                
 </ul>
 <?php } ?>
 </div>
@@ -1745,10 +1745,10 @@ $pendaftarperempuan=mysql_num_rows($perempuan);
 $nem=mysql_query("SELECT * FROM sh_psb ORDER BY nem DESC");
 $nemtertinggi=mysql_fetch_array($nem);
 ?>
-	<tr><td><b>Total Pendaftar</b></td><td><b><a href=""><?php echo "$totalpendaftar"?></a></b></td></tr>
-	<tr><td><b>Pendaftar Laki-laki</b></td><td><b><a href=""><?php echo "$pendaftarlaki"?></a></b></td></tr>
-	<tr><td><b>Pendaftar Perempuan</b></td><td><b><a href=""><?php echo "$pendaftarperempuan"?></a></b></td></tr>
-	<tr><td><b>NEM Tertinggi</b></td><td><b><a href=""><?php echo "$nemtertinggi[nem]"?></a></b></td></tr>
+        <tr><td><b>Total Pendaftar</b></td><td><b><a href=""><?php echo "$totalpendaftar"?></a></b></td></tr>
+        <tr><td><b>Pendaftar Laki-laki</b></td><td><b><a href=""><?php echo "$pendaftarlaki"?></a></b></td></tr>
+        <tr><td><b>Pendaftar Perempuan</b></td><td><b><a href=""><?php echo "$pendaftarperempuan"?></a></b></td></tr>
+        <tr><td><b>NEM Tertinggi</b></td><td><b><a href=""><?php echo "$nemtertinggi[nem]"?></a></b></td></tr>
 </table>
 <p>Silahkan Klik <a href="?p=formpsb"><b>&raquo;disini&laquo;</b></a> untuk melakukan pendaftaran secara online, atau klik
 <a href="?p=datapsb"><b>&raquo;disini&laquo;</b></a> untuk melihat data pendaftar.</p>
@@ -1772,45 +1772,45 @@ if ($r['nama_pengaturan']==1){
 <h3>Form Pendaftaran Siswa Baru <a href=""><?php echo "$ns[isi_pengaturan]";?></a></h3>
 <form method ="POST" action="kontenweb/insert_psb.php" name="formpsb" id="formpsb">
 <table style="margin-top: 20px">
-	<tr><td width="150px"><b>Nama Lengkap *</b></td><td>:</td><td><input type="text" class="sedang" name="nama"></td></tr>
-	<tr><td><b>Rata-rata NEM *</b></td><td>:</td><td><input type="text" class="pendek" name="nem"><br>
-	<small>Jika ada tanda koma (') maka diganti dengan tanda titik (.)</small></td></tr>
-	<tr><td><b>Jenis Kelamin *</b></td><td>:</td><td>
-	<input type="radio" name="jk" id="jk" value="L">Laki-laki&nbsp;
-	<input type="radio" name="jk" id="jk" value="P">Perempuan
-	</td></tr>
-	<tr><td><b>Sekolah Asal *</b></td><td>:</td><td><input type="text" class="panjang" name="sekolah_asal"></td></tr>
-	<tr><td><b>No. STTB *</b></td><td>:</td><td><input type="text" class="sedang" name="no_sttb"></td></tr>
-	<tr><td><b>Tanggal STTB *</b></td><td>:</td><td><input type="text" id="tanggal1" name="tanggal_sttb" class="sedang"></td></tr>
-	<tr><td><b>Tempat, Tanggal Lahir *</b></td><td>:</td><td><input type="text" class="sedang" name="tempat_lahir">&nbsp;<input type="text" class="sedang" name="tanggal_lahir" id="tanggal"></td></tr>
-	<tr><td><b>Berat Badan</b></td><td>:</td><td><input type="text" class="pendek" name="bb">&nbsp; kg</td></tr>
-	<tr><td><b>Tinggi Badan</b></td><td>:</td><td><input type="text" class="pendek" name="tb">&nbsp; cm</td></tr>
-	<tr><td><b>Alamat Lengkap *</b></td><td>:</td><td><textarea style="height: 125px" name="alamat"></textarea></td></tr>
-	<tr><td><b>Telepon</b></td><td>:</td><td><input type="text" class="sedang" name="telepon"></td></tr>
-	<tr><td><b>Email</b></td><td>:</td><td><input type="text" class="sedang" name="email"></td></tr>
-	<tr><td><b>Nama Orang Tua *</b></td><td>:</td><td><input type="text" class="sedang" name="nama_ortu"></td></tr>
-	<tr><td><b>Pekerjaan Orang Tua *</b></td><td>:</td><td>
-			<select name="pekerjaan_ortu">
-				<option value="" selected>Pilih pekerjaan orang tua</option>
-				<option value="Petani">Petani</option>
-				<option value="Wiraswasta">Wiraswasta</option>
-				<option value="PNS">PNS</option>
-				<option value="TNI/ POLRI">TNI/ POLRI</option>
-			</select>
-	</td></tr>
-	<tr><td colspan="3" style="border: 1px dashed #5b5b5b; padding: 20px;background: #fcffea;"><b>Darimanakah anda mengetahui PSB ONLINE <a href=""><?php echo "$ns[isi_pengaturan]"?></a></b><br><br>
-	<input type="radio" name="polling" id="polling" value="Media Cetak">Media Cetak<br><br>
-	<input type="radio" name="polling" id="polling" value="Internet">Internet<br><br>
-	<input type="radio" name="polling" id="polling" value="Teman">Teman<br><br>
-	<input type="radio" name="polling" id="polling" value="Kerabat">Kerabat<br><br>
-	</td></tr>
-	<tr><td colspan="3"><br><img src="kontenweb/captcha.php?date=<?php echo date('YmdHis');?>" alt="security image" /></td></tr>
-	<tr><td colspan="3"><input type="text" name="kode" class="pendek">&nbsp;<small><i>Masukkan kode diatas</i></td></tr>
-	<tr><td colspan="3"><br>
-	<input type="submit" class="tombol" value="Daftar">
-	<input type="reset" class="tombol" value="Reset">
-	
-	</td></tr>
+        <tr><td width="150px"><b>Nama Lengkap *</b></td><td>:</td><td><input type="text" class="sedang" name="nama"></td></tr>
+        <tr><td><b>Rata-rata NEM *</b></td><td>:</td><td><input type="text" class="pendek" name="nem"><br>
+        <small>Jika ada tanda koma (') maka diganti dengan tanda titik (.)</small></td></tr>
+        <tr><td><b>Jenis Kelamin *</b></td><td>:</td><td>
+        <input type="radio" name="jk" id="jk" value="L">Laki-laki&nbsp;
+        <input type="radio" name="jk" id="jk" value="P">Perempuan
+        </td></tr>
+        <tr><td><b>Sekolah Asal *</b></td><td>:</td><td><input type="text" class="panjang" name="sekolah_asal"></td></tr>
+        <tr><td><b>No. STTB *</b></td><td>:</td><td><input type="text" class="sedang" name="no_sttb"></td></tr>
+        <tr><td><b>Tanggal STTB *</b></td><td>:</td><td><input type="date" name="tanggal_sttb" class="sedang"></td></tr>
+        <tr><td><b>Tempat, Tanggal Lahir *</b></td><td>:</td><td><input type="text" class="sedang" name="tempat_lahir">&nbsp;<input type="date" name="tanggal_lahir" class="sedang"></td></tr>
+        <tr><td><b>Berat Badan</b></td><td>:</td><td><input type="text" class="pendek" name="bb">&nbsp; kg</td></tr>
+        <tr><td><b>Tinggi Badan</b></td><td>:</td><td><input type="text" class="pendek" name="tb">&nbsp; cm</td></tr>
+        <tr><td><b>Alamat Lengkap *</b></td><td>:</td><td><textarea style="height: 125px" name="alamat"></textarea></td></tr>
+        <tr><td><b>Telepon</b></td><td>:</td><td><input type="text" class="sedang" name="telepon"></td></tr>
+        <tr><td><b>Email</b></td><td>:</td><td><input type="text" class="sedang" name="email"></td></tr>
+        <tr><td><b>Nama Orang Tua *</b></td><td>:</td><td><input type="text" class="sedang" name="nama_ortu"></td></tr>
+        <tr><td><b>Pekerjaan Orang Tua *</b></td><td>:</td><td>
+                        <select name="pekerjaan_ortu">
+                                <option value="" selected>Pilih pekerjaan orang tua</option>
+                                <option value="Petani">Petani</option>
+                                <option value="Wiraswasta">Wiraswasta</option>
+                                <option value="PNS">PNS</option>
+                                <option value="TNI/ POLRI">TNI/ POLRI</option>
+                        </select>
+        </td></tr>
+        <tr><td colspan="3" style="border: 1px dashed #5b5b5b; padding: 20px;background: #fcffea;"><b>Darimanakah anda mengetahui PSB ONLINE <a href=""><?php echo "$ns[isi_pengaturan]"?></a></b><br><br>
+        <input type="radio" name="polling" id="polling" value="Media Cetak">Media Cetak<br><br>
+        <input type="radio" name="polling" id="polling" value="Internet">Internet<br><br>
+        <input type="radio" name="polling" id="polling" value="Teman">Teman<br><br>
+        <input type="radio" name="polling" id="polling" value="Kerabat">Kerabat<br><br>
+        </td></tr>
+        <tr><td colspan="3"><br><img src="kontenweb/captcha.php?date=<?php echo date('YmdHis');?>" alt="security image" /></td></tr>
+        <tr><td colspan="3"><input type="text" name="kode" class="pendek">&nbsp;<small><i>Masukkan kode diatas</i></td></tr>
+        <tr><td colspan="3"><br>
+        <input type="submit" class="tombol" value="Daftar">
+        <input type="reset" class="tombol" value="Reset">
+        
+        </td></tr>
 </table>
 </form>
 <?php include "form.php";?>
@@ -1851,43 +1851,43 @@ if ($r['nama_pengaturan']==1){
 <input type="text" class="cari" name="cari"><input type="submit" class="tombol" style="margin-top: 20px" value="Cari">
 </form>
 <table class="garis" id="results">
-	<tr>
-		<th class="garis" width="35px">No</th><th class="garis">Nama Pendaftar</th><th class="garis">NEM</th><th class="garis">Sekolah Asal</th><th class="garis">Status</th>
-	</tr>
-	<?php
-	$no=1;
-	$psb=mysql_query("SELECT * FROM sh_psb ORDER BY status_psb DESC");
-	$hitungpsb=mysql_num_rows($psb);
-	
-	if ($hitungpsb > 0){
-	while($r=mysql_fetch_array($psb)){
-	?>
-	<tr class="garis"><td class="garis"><?php echo "$no";?></td>
-		<td class="garis"><?php echo "<b>$r[nama_psb]</b>";?></td>
-		<td class="garis"><?php echo "$r[nem]";?></td>
-		<td class="garis"><?php echo "$r[sekolah_asal]";?></td>
-		<td class="garis"><?php
-		if ($r['status_psb']== 1){
-		echo "<center><img src='kontenweb/terima.png'></center>";}
-		else {
-		echo "<center><img src='kontenweb/tolak.png'></center>";
-		}?></td>
-	</tr>
-	<?php $no++; }}
-	else {?>
-	<tr class="garis"><td class="garis" colspan="5"><b>Data Pendaftar Belum Ada</b></td></tr>
-	<?php } ?>
+        <tr>
+                <th class="garis" width="35px">No</th><th class="garis">Nama Pendaftar</th><th class="garis">NEM</th><th class="garis">Sekolah Asal</th><th class="garis">Status</th>
+        </tr>
+        <?php
+        $no=1;
+        $psb=mysql_query("SELECT * FROM sh_psb ORDER BY status_psb DESC");
+        $hitungpsb=mysql_num_rows($psb);
+        
+        if ($hitungpsb > 0){
+        while($r=mysql_fetch_array($psb)){
+        ?>
+        <tr class="garis"><td class="garis"><?php echo "$no";?></td>
+                <td class="garis"><?php echo "<b>$r[nama_psb]</b>";?></td>
+                <td class="garis"><?php echo "$r[nem]";?></td>
+                <td class="garis"><?php echo "$r[sekolah_asal]";?></td>
+                <td class="garis"><?php
+                if ($r['status_psb']== 1){
+                echo "<center><img src='kontenweb/terima.png'></center>";}
+                else {
+                echo "<center><img src='kontenweb/tolak.png'></center>";
+                }?></td>
+        </tr>
+        <?php $no++; }}
+        else {?>
+        <tr class="garis"><td class="garis" colspan="5"><b>Data Pendaftar Belum Ada</b></td></tr>
+        <?php } ?>
 </table>
-				<div id="pageNavPosition"></div>
-		
-		
-			    <script type="text/javascript"><!--
+                                <div id="pageNavPosition"></div>
+                
+                
+                            <script type="text/javascript"><!--
         var pager = new Pager('results', 50); 
         pager.init(); 
         pager.showPageNav('pager', 'pageNavPosition'); 
         pager.showPage(1);
     //--></script>
-	
+        
 <table style="margin-top: 20px; width: auto;">
 <tr><td><img src="kontenweb/terima.png"></td><td>:</td><td>Daftar Ulang</td></tr>
 <tr><td><img src="kontenweb/tolak.png"></td><td>:</td><td>Tidak memenuhi syarat/ belum dimoderasi</td></tr>
@@ -1915,44 +1915,44 @@ if ($r['nama_pengaturan']==1){
 <input type="text" class="cari" name="cari"><input type="submit" class="tombol" style="margin-top: 20px" value="Cari">
 </form>
 <table class="garis" id="results">
-	<tr>
-		<th class="garis" width="35px">No</th><th class="garis">Nama Pendaftar</th><th class="garis">NEM</th><th class="garis">Sekolah Asal</th><th class="garis">Status</th>
-	</tr>
-	<?php
-	$no=1;
-	$psb=mysql_query("SELECT * FROM sh_psb WHERE nama_psb LIKE '%$cari%' ORDER BY status_psb DESC");
-	$hitungpsb=mysql_num_rows($psb);
-	
-	if ($hitungpsb > 0){
-	while($r=mysql_fetch_array($psb)){
-	?>
-	<tr class="garis"><td class="garis"><?php echo "$no";?></td>
-		<td class="garis"><?php echo "<b>$r[nama_psb]</b>";?></td>
-		<td class="garis"><?php echo "$r[nem]";?></td>
-		<td class="garis"><?php echo "$r[sekolah_asal]";?></td>
-		<td class="garis"><?php
-		if ($r['status_psb']== 1){
-		echo "<center><img src='kontenweb/terima.png'></center>";}
-		else {
-		echo "<center><img src='kontenweb/tolak.png'></center>";
-		}?></td>
-	</tr>
-	<?php $no++; }}
-	else {?>
-	<tr class="garis"><td class="garis" colspan="5"><b>Data tidak ditemukan</b></td></tr>
-	<?php } ?>
-	
+        <tr>
+                <th class="garis" width="35px">No</th><th class="garis">Nama Pendaftar</th><th class="garis">NEM</th><th class="garis">Sekolah Asal</th><th class="garis">Status</th>
+        </tr>
+        <?php
+        $no=1;
+        $psb=mysql_query("SELECT * FROM sh_psb WHERE nama_psb LIKE '%$cari%' ORDER BY status_psb DESC");
+        $hitungpsb=mysql_num_rows($psb);
+        
+        if ($hitungpsb > 0){
+        while($r=mysql_fetch_array($psb)){
+        ?>
+        <tr class="garis"><td class="garis"><?php echo "$no";?></td>
+                <td class="garis"><?php echo "<b>$r[nama_psb]</b>";?></td>
+                <td class="garis"><?php echo "$r[nem]";?></td>
+                <td class="garis"><?php echo "$r[sekolah_asal]";?></td>
+                <td class="garis"><?php
+                if ($r['status_psb']== 1){
+                echo "<center><img src='kontenweb/terima.png'></center>";}
+                else {
+                echo "<center><img src='kontenweb/tolak.png'></center>";
+                }?></td>
+        </tr>
+        <?php $no++; }}
+        else {?>
+        <tr class="garis"><td class="garis" colspan="5"><b>Data tidak ditemukan</b></td></tr>
+        <?php } ?>
+        
 </table>
-				<div id="pageNavPosition"></div>
-		
-		
-			    <script type="text/javascript"><!--
+                                <div id="pageNavPosition"></div>
+                
+                
+                            <script type="text/javascript"><!--
         var pager = new Pager('results', 50); 
         pager.init(); 
         pager.showPageNav('pager', 'pageNavPosition'); 
         pager.showPage(1);
     //--></script>
-	
+        
 <table style="margin-top: 20px; width: auto;">
 <tr><td><img src="kontenweb/terima.png"></td><td>:</td><td>Daftar Ulang</td></tr>
 <tr><td><img src="kontenweb/tolak.png"></td><td>:</td><td>Tidak memenuhi syarat/ belum dimoderasi</td></tr>
@@ -1978,8 +1978,8 @@ $hasilpolling=mysql_query("SELECT * FROM sh_sidebar WHERE jenis='polling' AND st
 while ($r=mysql_fetch_array($hasilpolling)){
 $persen=($r['isi1']!=0)?($r['isi1']/$tp['hitung']) * 100:0; 
 ?>
-	<tr><td width="230px"><b><?php echo "$r[nama]";?></b>&nbsp(<?php printf("%1.0f" , $persen);echo "%";?>)</td><td>
-	<img src="kontenweb/blue.jpg" height="38px" width="<?php $panjang=$persen/100* 300; echo "$panjang"; ?>"></td></tr>
+        <tr><td width="230px"><b><?php echo "$r[nama]";?></b>&nbsp(<?php printf("%1.0f" , $persen);echo "%";?>)</td><td>
+        <img src="kontenweb/blue.jpg" height="38px" width="<?php $panjang=$persen/100* 300; echo "$panjang"; ?>"></td></tr>
 <?php }?>
 </table>
 </div>
@@ -1994,11 +1994,11 @@ $persen=($r['isi1']!=0)?($r['isi1']/$tp['hitung']) * 100:0;
 <?php
 $gmap=mysql_query("SELECT * FROM sh_pengaturan WHERE id_pengaturan='14'");
 $r=mysql_fetch_array($gmap);
-			if (!empty($r['isi_pengaturan'])){
-			echo "$r[isi_pengaturan]";}
-			else {
-				echo "<br><img src='images/$r[isi_pengaturan2]' width='628px'>";
-			}
+                        if (!empty($r['isi_pengaturan'])){
+                        echo "$r[isi_pengaturan]";}
+                        else {
+                                echo "<br><img src='images/$r[isi_pengaturan2]' width='628px'>";
+                        }
 ?>
 </div>
 </div>
@@ -2058,7 +2058,7 @@ $galeri=mysql_query("SELECT * FROM sh_galeri WHERE id_album='$_GET[id]'");
 while ($r=mysql_fetch_array($galeri)){
 ?>
 <p class="thumb"><a id="thumb1" href="images/foto/galeri/<?php echo "$r[nama_galeri]";?>" class="highslide" onclick="return hs.expand(this)">
-			<img src="images/foto/galeri/<?php echo "$r[nama_galeri]";?>" alt="Highslide JS" title="Klik untuk memperbesar" width="350px"/></a>
+                        <img src="images/foto/galeri/<?php echo "$r[nama_galeri]";?>" alt="Highslide JS" title="Klik untuk memperbesar" width="350px"/></a>
 </p><?php } ?>
 </div>
 <?php }
